@@ -23,12 +23,10 @@ const Index = () => {
   const [demoOpen, setDemoOpen] = useState(false);
   const [ctaOpen, setCTAOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
-  const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [currentTagline, setCurrentTagline] = useState(0);
   const [selectedPersona, setSelectedPersona] = useState("Founder");
   const [konamiSequence, setKonamiSequence] = useState([]);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
-  const [currentIntegration, setCurrentIntegration] = useState(0);
   const [chatMessages, setChatMessages] = useState([
     { text: "Hey there! How can I help you today?", sender: "bot" },
     { text: "This is a demo assistant — but I still reply fast 😉", sender: "bot" }
@@ -48,14 +46,14 @@ const Index = () => {
   const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
 
   const integrations = [
-    { name: "Stripe", icon: "💳" },
-    { name: "Notion", icon: "📝" },
-    { name: "Slack", icon: "💬" },
-    { name: "Discord", icon: "🎮" },
-    { name: "Shopify", icon: "🛍️" },
-    { name: "Zapier", icon: "⚡" },
-    { name: "Mailchimp", icon: "📧" },
-    { name: "Google Analytics", icon: "📊" }
+    { name: "Slack", logo: "/slack.svg" },
+    { name: "Notion", logo: "/notion.svg" },
+    { name: "Stripe", logo: "/stripe.svg" },
+    { name: "Discord", logo: "/discord.svg" },
+    { name: "Shopify", logo: "/shopify.svg" },
+    { name: "Zapier", logo: "/zapier.svg" },
+    { name: "Mailchimp", logo: "/mailchimp.svg" },
+    { name: "Google Analytics", logo: "/google_analytics.svg" }
   ];
 
   // Scroll functions
@@ -134,15 +132,6 @@ const Index = () => {
     }
   ];
 
-  const userAvatars = [
-    { name: "Alex Johnson", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", testimonial: "Launched my e-commerce store in 3 days!" },
-    { name: "Lisa Park", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", testimonial: "Perfect for my consulting business." },
-    { name: "David Kim", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face", testimonial: "Analytics helped me optimize conversions." },
-    { name: "Maria Santos", avatar: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=150&h=150&fit=crop&crop=face", testimonial: "Best investment for my startup." },
-    { name: "James Wilson", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", testimonial: "Saved me months of development time." },
-    { name: "Sophie Chen", avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face", testimonial: "Intuitive and powerful platform." }
-  ];
-
   const useCases = [
     {
       icon: <Briefcase className="w-8 h-8 text-blue-400" />,
@@ -211,7 +200,6 @@ const Index = () => {
             <button onClick={() => scrollToSection('features')} className="hover:text-blue-400 transition-colors">Features</button>
             <button onClick={() => scrollToSection('roadmap')} className="hover:text-blue-400 transition-colors">Roadmap</button>
             <button onClick={() => scrollToSection('dashboard')} className="hover:text-blue-400 transition-colors">Dashboard</button>
-            <button onClick={() => scrollToSection('testimonials')} className="hover:text-blue-400 transition-colors">Testimonials</button>
             <button onClick={() => scrollToSection('pricing')} className="hover:text-blue-400 transition-colors">Pricing</button>
             <button onClick={() => scrollToSection('newsletter')} className="hover:text-blue-400 transition-colors">Subscribe</button>
           </nav>
@@ -238,7 +226,7 @@ const Index = () => {
       <StartupRoadmap />
       <FeaturesSection />
 
-      {/* Integrations Section */}
+      {/* Integrations Section with Continuous Scroll */}
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
@@ -248,15 +236,23 @@ const Index = () => {
             </p>
           </div>
           <div className="relative overflow-hidden">
-            <div className="flex space-x-6 animate-slide-x" style={{ transform: `translateX(-${currentIntegration * 120}px)` }}>
-              {[...integrations, ...integrations].map((integration, index) => (
+            <div className="flex space-x-6 animate-scroll-left">
+              {/* Duplicate integrations for seamless loop */}
+              {[...integrations, ...integrations, ...integrations].map((integration, index) => (
                 <div
                   key={index}
                   className="flex-shrink-0 group relative"
                 >
                   <Card className="bg-gray-800 border-gray-700 hover:border-blue-500 transition-all duration-300 hover:transform hover:scale-105 w-28 h-28">
                     <CardContent className="p-4 flex flex-col items-center justify-center h-full">
-                      <div className="text-3xl mb-2">{integration.icon}</div>
+                      <img 
+                        src={integration.logo} 
+                        alt={integration.name}
+                        className="w-8 h-8 mb-2"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
                       <p className="text-xs text-gray-400 text-center">{integration.name}</p>
                     </CardContent>
                   </Card>
@@ -382,19 +378,19 @@ const Index = () => {
                           <Button 
                             variant="outline" 
                             size="sm" 
-                            className="border-gray-400 hover:border-blue-400 text-gray-200 hover:text-white hover:bg-gray-500"
+                            className="border-gray-400 hover:border-blue-400 text-black hover:text-black hover:bg-gray-300 hover:scale-105 transition-all duration-200"
                             onClick={() => alert("Get Support clicked! This would open a support modal in a real app.")}
                           >
-                            <Mail className="w-4 h-4 mr-2" />
+                            <Mail className="w-4 h-4 mr-2 text-black" />
                             Get Support
                           </Button>
                           <Button 
                             variant="outline" 
                             size="sm" 
-                            className="border-gray-400 hover:border-blue-400 text-gray-200 hover:text-white hover:bg-gray-500"
+                            className="border-gray-400 hover:border-blue-400 text-black hover:text-black hover:bg-gray-300 hover:scale-105 transition-all duration-200 hover:shadow-lg"
                             onClick={() => alert("User Report clicked! This would generate a user report in a real app.")}
                           >
-                            <FileText className="w-4 h-4 mr-2" />
+                            <FileText className="w-4 h-4 mr-2 text-black" />
                             User Report
                           </Button>
                         </div>
@@ -648,33 +644,6 @@ const Index = () => {
               </p>
               <Button className="w-full bg-blue-600 hover:bg-blue-700">
                 View Full Report
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      )}
-
-      {/* Avatar Testimonial Modal */}
-      {selectedAvatar && (
-        <Dialog open={!!selectedAvatar} onOpenChange={() => setSelectedAvatar(null)}>
-          <DialogContent className="bg-gray-800 border-gray-700">
-            <DialogHeader>
-              <DialogTitle className="text-white flex items-center space-x-3">
-                <img 
-                  src={selectedAvatar.avatar} 
-                  alt={selectedAvatar.name}
-                  className="w-12 h-12 rounded-full"
-                  onError={(e) => {
-                    e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(selectedAvatar.name)}&background=374151&color=fff&size=48`;
-                  }}
-                />
-                <span>{selectedAvatar.name}</span>
-              </DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-              <p className="text-gray-300 italic text-lg">"{selectedAvatar.testimonial}"</p>
-              <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => setCTAOpen(true)}>
-                Start Your Journey
               </Button>
             </div>
           </DialogContent>

@@ -4,9 +4,9 @@ import { Star } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Sarah Chen",
-    role: "Founder, TechFlow",
-    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
+    name: "Amina Davis",
+    role: "Founder, Creativo",
+    avatar: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=150&h=150&fit=crop&crop=face",
     quote: "Launchly saved me weeks of dev work and got me to market 3x faster."
   },
   {
