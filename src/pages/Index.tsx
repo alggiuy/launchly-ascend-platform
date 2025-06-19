@@ -3,12 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Check, Star, ArrowUp, Bell, Settings, Home, Calendar, Mail, Package, FileText, User, MessageSquare, X, TrendingUp, Users, Zap, Code, Palette, BarChart3, Shield, Rocket, Briefcase, PenTool, Target, Lightbulb, ChevronLeft, ChevronRight } from "lucide-react";
 
 const Index = () => {
   const [email, setEmail] = useState("");
   const [userCount, setUserCount] = useState(0);
   const [chatOpen, setChatOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [currentTagline, setCurrentTagline] = useState(0);
@@ -17,6 +21,11 @@ const Index = () => {
   const [konamiSequence, setKonamiSequence] = useState([]);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [currentIntegration, setCurrentIntegration] = useState(0);
+  const [chatMessages, setChatMessages] = useState([
+    { text: "Hey there! How can I help you today?", sender: "bot" },
+    { text: "This is a demo assistant — but I still reply fast 😉", sender: "bot" }
+  ]);
+  const [newMessage, setNewMessage] = useState("");
 
   const taglines = [
     "Launch Smarter.",
@@ -43,7 +52,7 @@ const Index = () => {
   const timelineSteps = [
     {
       icon: <Target className="w-8 h-8 text-blue-400" />,
-      title: "Test your idea with real feedback",
+      title: "Validate your idea with real feedback",
       description: "Get validation before you invest time building"
     },
     {
@@ -53,13 +62,13 @@ const Index = () => {
     },
     {
       icon: <BarChart3 className="w-8 h-8 text-blue-400" />,
-      title: "Make decisions backed by live analytics",
+      title: "Use data to make smarter decisions",
       description: "See what works and double down on it"
     },
     {
       icon: <Star className="w-8 h-8 text-blue-400" />,
-      title: "Because launching should feel like winning",
-      description: "Celebrate with thousands of successful founders"
+      title: "Celebrate success. You've earned it.",
+      description: "Join thousands of successful founders"
     }
   ];
 
@@ -141,23 +150,23 @@ const Index = () => {
   const features = [
     {
       icon: <Settings className="w-8 h-8 text-blue-400" />,
-      title: "Skip configs, start building",
+      title: "No devs needed. Just launch.",
       description: "No more wrestling with setup. Jump straight into creating what matters."
     },
     {
       icon: <Bell className="w-8 h-8 text-blue-400" />,
-      title: "Know what's working instantly",
+      title: "Know what's working instantly.",
       description: "Real-time insights that actually help you make better decisions."
     },
     {
       icon: <ArrowUp className="w-8 h-8 text-blue-400" />,
-      title: "No stress when traffic spikes",
+      title: "No stress when traffic spikes.",
       description: "Built to handle your success. Scale without breaking a sweat."
     },
     {
       icon: <Star className="w-8 h-8 text-blue-400" />,
-      title: "Real help from people who've been there",
-      description: "Get advice from founders who've launched, scaled, and sold. You're not alone."
+      title: "Talk to people who've launched, failed, and won.",
+      description: "Get advice from founders who've been there. You're not alone."
     }
   ];
 
@@ -175,7 +184,7 @@ const Index = () => {
         "Payment Processing"
       ],
       popular: false,
-      cta: "Start for $0"
+      cta: "Test the waters"
     },
     {
       name: "Pro",
@@ -191,7 +200,7 @@ const Index = () => {
         "API Access"
       ],
       popular: true,
-      cta: "Upgrade Anytime"
+      cta: "Most Popular — Get serious"
     },
     {
       name: "Enterprise",
@@ -207,7 +216,7 @@ const Index = () => {
         "Custom Integrations"
       ],
       popular: false,
-      cta: "Pick Your Plan →"
+      cta: "Let's go big"
     }
   ];
 
@@ -216,19 +225,19 @@ const Index = () => {
       name: "Sarah Chen",
       role: "Founder, TechFlow",
       avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
-      quote: "This saved me weeks of dev work. Seriously."
+      quote: "This saved me weeks of dev work."
     },
     {
       name: "Marcus Rodriguez",
       role: "CEO, GrowthLab",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-      quote: "Launchly felt like a co-founder with superpowers."
+      quote: "Launchly felt like having a technical co-founder."
     },
     {
       name: "Emma Thompson",
       role: "Founder, DesignCo",
       avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-      quote: "From idea to launch in 48 hours. I couldn't believe it."
+      quote: "From idea to launch in 48 hours. It's wild."
     }
   ];
 
@@ -292,19 +301,10 @@ const Index = () => {
   ];
 
   const comparisonData = [
-    { feature: "Setup Time", wordpress: "2-4 weeks", launchly: "2-4 hours" },
-    { feature: "Design Freedom", wordpress: "Limited", launchly: "Unlimited" },
-    { feature: "Built-in Analytics", wordpress: "Plugin Required", launchly: "Included" },
-    { feature: "Performance", wordpress: "Varies", launchly: "Optimized" },
-    { feature: "Support", wordpress: "Community", launchly: "24/7 Expert" }
-  ];
-
-  const chatMessages = [
-    { text: "Hi! I'm here to help you launch your next idea. What can I assist you with today?", sender: "bot" },
-    { text: "How quickly can I get started?", sender: "user" },
-    { text: "You can launch your first project in under 10 minutes! Would you like me to show you how?", sender: "bot" },
-    { text: "What's included in the free trial?", sender: "user" },
-    { text: "Full access to all features for 14 days - no credit card required. You can build, test, and launch completely free!", sender: "bot" }
+    { feature: "Setup time", wordpress: "2-4 weeks", launchly: "Hours" },
+    { feature: "Performance", wordpress: "Varies", launchly: "🚀" },
+    { feature: "Analytics", wordpress: "Plugin Required", launchly: "Built-in" },
+    { feature: "Support", wordpress: "Community", launchly: "Real people" }
   ];
 
   const getPersonaContent = () => {
@@ -312,17 +312,17 @@ const Index = () => {
       case "Freelancer":
         return {
           headline: "Launch What Matters",
-          subtext: "Turn your freelance hustle into a real business. Join thousands of independent pros who skipped the fluff and built something lasting with Launchly."
+          subtext: "Build smarter, launch faster. Join thousands of independent pros who skipped the fluff and built something lasting with Launchly."
         };
       case "Agency":
         return {
           headline: "Launch What Matters",
-          subtext: "Scale your agency operations without the usual chaos. Join thousands of agency owners who streamlined their process with Launchly."
+          subtext: "Build smarter, launch faster. Join thousands of agency owners who streamlined their process with Launchly."
         };
       default:
         return {
           headline: "Launch What Matters",
-          subtext: "Turn your idea into something real — fast. Join thousands of founders who skipped the fluff and built businesses with Launchly."
+          subtext: "Build smarter, launch faster. Join thousands of founders who skipped the fluff and built businesses with Launchly."
         };
     }
   };
@@ -331,6 +331,26 @@ const Index = () => {
     e.preventDefault();
     console.log("Newsletter signup:", email);
     setEmail("");
+  };
+
+  const handleLoginSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Login attempt:", loginEmail);
+    setLoginOpen(false);
+    setLoginEmail("");
+    setLoginPassword("");
+  };
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newMessage.trim()) {
+      setChatMessages(prev => [...prev, { text: newMessage, sender: "user" }]);
+      setNewMessage("");
+      // Auto-reply after a short delay
+      setTimeout(() => {
+        setChatMessages(prev => [...prev, { text: "Thanks for the message! This is just a demo, but in a real app I'd be super helpful! 🚀", sender: "bot" }]);
+      }, 1000);
+    }
   };
 
   const handleMagneticCTA = (e: React.MouseEvent) => {
@@ -365,6 +385,54 @@ const Index = () => {
         </div>
       )}
 
+      {/* Login Modal */}
+      <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
+        <DialogContent className="bg-gray-800 border-gray-700">
+          <DialogHeader>
+            <DialogTitle className="text-white">Sign In to Launchly</DialogTitle>
+            <DialogDescription className="text-gray-300">
+              Welcome back! Enter your credentials to continue.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleLoginSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                Email address
+              </label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                value={loginEmail}
+                onChange={(e) => setLoginEmail(e.target.value)}
+                className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+                Password
+              </label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+                className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+                required
+              />
+            </div>
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+              Sign In
+            </Button>
+            <p className="text-sm text-gray-400 text-center">
+              Don't have an account? <span className="text-blue-400 cursor-pointer">Sign up</span>
+            </p>
+          </form>
+        </DialogContent>
+      </Dialog>
+
       {/* Header */}
       <header className="fixed top-0 w-full bg-gray-900/80 backdrop-blur-lg border-b border-gray-800 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -377,7 +445,10 @@ const Index = () => {
             <a href="#dashboard" className="hover:text-blue-400 transition-colors">Dashboard</a>
             <a href="#contact" className="hover:text-blue-400 transition-colors">Contact</a>
           </nav>
-          <Button className="bg-blue-600 hover:bg-blue-700">
+          <Button 
+            className="bg-blue-600 hover:bg-blue-700"
+            onClick={() => setLoginOpen(true)}
+          >
             Sign In
           </Button>
         </div>
@@ -492,7 +563,7 @@ const Index = () => {
       <section id="features" className="py-20 px-4 bg-gray-800/50">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">⚡ Zero to Launch in Minutes</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Zero to Launch in Minutes</h2>
             <p className="text-gray-300 text-lg max-w-2xl mx-auto">
               Everything you need — nothing you don't.
             </p>
@@ -506,7 +577,7 @@ const Index = () => {
                   </div>
                   <h3 className="text-xl font-semibold mb-2 text-white">{feature.title}</h3>
                   <p className="text-gray-300">{feature.description}</p>
-                </CardContent>
+                </CardContent>  
               </Card>
             ))}
           </div>
@@ -544,7 +615,7 @@ const Index = () => {
           </div>
           <div className="text-center mt-8">
             <p className="text-gray-400">
-              More integrations coming soon. Got a tool you love? Let us know.
+              More integrations coming soon. Need a specific tool? Let us know.
             </p>
           </div>
         </div>
@@ -689,13 +760,23 @@ const Index = () => {
                       <CardContent className="p-4">
                         <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
                         <div className="grid grid-cols-2 gap-3">
-                          <Button variant="outline" size="sm" className="border-gray-500 hover:border-blue-400">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="border-gray-500 hover:border-blue-400"
+                            onClick={() => alert("Get Support clicked! This would open a support modal in a real app.")}
+                          >
                             <Mail className="w-4 h-4 mr-2" />
-                            Send Email
+                            Get Support
                           </Button>
-                          <Button variant="outline" size="sm" className="border-gray-500 hover:border-blue-400">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="border-gray-500 hover:border-blue-400"
+                            onClick={() => alert("User Report clicked! This would generate a user report in a real app.")}
+                          >
                             <FileText className="w-4 h-4 mr-2" />
-                            New Report
+                            User Report
                           </Button>
                         </div>
                       </CardContent>
@@ -818,8 +899,11 @@ const Index = () => {
       <section className="py-20 px-4">
         <div className="container mx-auto text-center max-w-2xl">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">📬 Want launch tips & founder insights?</h2>
-          <p className="text-gray-300 text-lg mb-8">
+          <p className="text-gray-300 text-lg mb-2">
             Drop your email — no spam, just value.
+          </p>
+          <p className="text-gray-400 text-sm mb-8">
+            Insights, tips, and the occasional founder meme.
           </p>
           <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
             <Input
@@ -860,6 +944,11 @@ const Index = () => {
       {/* Footer */}
       <footer id="contact" className="bg-gray-900 border-t border-gray-800 py-16 px-4">
         <div className="container mx-auto">
+          <div className="text-center mb-8">
+            <p className="text-gray-400 text-sm">
+              Launchly is a demo project built to showcase high-end landing pages. Want one like this? Let's talk.
+            </p>
+          </div>
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-4">
@@ -877,9 +966,9 @@ const Index = () => {
             <div>
               <h3 className="font-semibold mb-4">Product</h3>
               <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Features</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Pricing</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Dashboard</a></li>
+                <li><a href="#features" className="text-gray-400 hover:text-blue-400 transition-colors">Features</a></li>
+                <li><a href="#pricing" className="text-gray-400 hover:text-blue-400 transition-colors">Pricing</a></li>
+                <li><a href="#dashboard" className="text-gray-400 hover:text-blue-400 transition-colors">Dashboard</a></li>
                 <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Integrations</a></li>
               </ul>
             </div>
@@ -889,7 +978,7 @@ const Index = () => {
                 <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">About</a></li>
                 <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Blog</a></li>
                 <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Careers</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Contact</a></li>
+                <li><a href="#contact" className="text-gray-400 hover:text-blue-400 transition-colors">Contact</a></li>
               </ul>
             </div>
             <div>
@@ -956,9 +1045,17 @@ const Index = () => {
               ))}
             </div>
             <div className="p-4 border-t border-gray-700">
-              <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                Start Free Trial
-              </Button>
+              <form onSubmit={handleSendMessage} className="flex space-x-2">
+                <Input
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  placeholder="Type a message..."
+                  className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 flex-1"
+                />
+                <Button type="submit" size="sm" className="bg-blue-600 hover:bg-blue-700">
+                  Send
+                </Button>
+              </form>
             </div>
           </div>
         )}
@@ -966,19 +1063,21 @@ const Index = () => {
 
       {/* Dashboard Card Modal */}
       {selectedCard && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-800 rounded-lg p-6 max-w-md w-full border border-gray-700">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-semibold">{selectedCard.title}</h3>
-              <Button variant="ghost" size="sm" onClick={() => setSelectedCard(null)}>
-                <X className="w-4 h-4" />
-              </Button>
-            </div>
+        <Dialog open={!!selectedCard} onOpenChange={() => setSelectedCard(null)}>
+          <DialogContent className="bg-gray-800 border-gray-700">
+            <DialogHeader>
+              <DialogTitle className="text-white flex items-center space-x-2">
+                {selectedCard.icon}
+                <span>{selectedCard.title}</span>
+              </DialogTitle>
+              <DialogDescription className="text-gray-300">
+                Detailed insights for your {selectedCard.title.toLowerCase()}
+              </DialogDescription>
+            </DialogHeader>
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                {selectedCard.icon}
                 <div>
-                  <p className="text-2xl font-bold">{selectedCard.value}</p>
+                  <p className="text-3xl font-bold text-white">{selectedCard.value}</p>
                   <p className="text-green-400">{selectedCard.change} vs last month</p>
                 </div>
               </div>
@@ -990,35 +1089,32 @@ const Index = () => {
                 View Full Report
               </Button>
             </div>
-          </div>
-        </div>
+          </DialogContent>
+        </Dialog>
       )}
 
       {/* Avatar Testimonial Modal */}
       {selectedAvatar && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-800 rounded-lg p-6 max-w-md w-full border border-gray-700">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center space-x-3">
+        <Dialog open={!!selectedAvatar} onOpenChange={() => setSelectedAvatar(null)}>
+          <DialogContent className="bg-gray-800 border-gray-700">
+            <DialogHeader>
+              <DialogTitle className="text-white flex items-center space-x-3">
                 <img 
                   src={selectedAvatar.avatar} 
                   alt={selectedAvatar.name}
                   className="w-12 h-12 rounded-full"
                 />
-                <h3 className="text-xl font-semibold">{selectedAvatar.name}</h3>
-              </div>
-              <Button variant="ghost" size="sm" onClick={() => setSelectedAvatar(null)}>
-                <X className="w-4 h-4" />
-              </Button>
-            </div>
+                <span>{selectedAvatar.name}</span>
+              </DialogTitle>
+            </DialogHeader>
             <div className="space-y-4">
-              <p className="text-gray-300 italic">"{selectedAvatar.testimonial}"</p>
+              <p className="text-gray-300 italic text-lg">"{selectedAvatar.testimonial}"</p>
               <Button className="w-full bg-blue-600 hover:bg-blue-700">
                 Start Your Journey
               </Button>
             </div>
-          </div>
-        </div>
+          </DialogContent>
+        </Dialog>
       )}
     </div>
   );
