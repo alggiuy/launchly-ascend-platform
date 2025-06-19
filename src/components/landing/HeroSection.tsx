@@ -9,6 +9,7 @@ interface HeroSectionProps {
   currentTagline: number;
   taglines: string[];
   handleMagneticCTA: (e: React.MouseEvent) => void;
+  onCTAClick: () => void;
 }
 
 const personas = ["Founder", "Freelancer", "Agency"];
@@ -39,7 +40,8 @@ export const HeroSection = ({
   ctaClicks, 
   currentTagline, 
   taglines, 
-  handleMagneticCTA 
+  handleMagneticCTA,
+  onCTAClick
 }: HeroSectionProps) => {
   return (
     <section className="pt-32 pb-20 px-4">
@@ -82,6 +84,7 @@ export const HeroSection = ({
           size="lg" 
           className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 magnetic-button"
           onMouseMove={handleMagneticCTA}
+          onClick={onCTAClick}
         >
           Try it Free
         </Button>

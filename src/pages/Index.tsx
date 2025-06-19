@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { TrendingUp, Users, Zap, BarChart3, Bell, Package, FileText, Mail, MessageSquare, X, Briefcase, Rocket, PenTool } from "lucide-react";
+import { TrendingUp, Users, Zap, BarChart3, Bell, Package, FileText, Mail, MessageSquare, X, Briefcase, Rocket, PenTool, Github, Twitter, Linkedin } from "lucide-react";
 
 // Import refactored components
 import { HeroSection } from "@/components/landing/HeroSection";
@@ -13,14 +13,15 @@ import { FeaturesSection } from "@/components/landing/FeaturesSection";
 import { TestimonialsSection } from "@/components/landing/TestimonialsSection";
 import { PricingSection } from "@/components/landing/PricingSection";
 import { EasterEggModal } from "@/components/landing/EasterEggModal";
+import { DemoModal } from "@/components/landing/DemoModal";
+import { CTAModal } from "@/components/landing/CTAModal";
+import { NewsletterSection } from "@/components/landing/NewsletterSection";
 import { useAnimatedCounter } from "@/hooks/useAnimatedCounter";
 
 const Index = () => {
-  const [email, setEmail] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
+  const [demoOpen, setDemoOpen] = useState(false);
+  const [ctaOpen, setCTAOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [currentTagline, setCurrentTagline] = useState(0);
@@ -56,6 +57,18 @@ const Index = () => {
     { name: "Mailchimp", icon: "📧" },
     { name: "Google Analytics", icon: "📊" }
   ];
+
+  // Scroll functions
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -125,7 +138,7 @@ const Index = () => {
     { name: "Alex Johnson", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", testimonial: "Launched my e-commerce store in 3 days!" },
     { name: "Lisa Park", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", testimonial: "Perfect for my consulting business." },
     { name: "David Kim", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face", testimonial: "Analytics helped me optimize conversions." },
-    { name: "Maria Santos", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", testimonial: "Best investment for my startup." },
+    { name: "Maria Santos", avatar: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=150&h=150&fit=crop&crop=face", testimonial: "Best investment for my startup." },
     { name: "James Wilson", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", testimonial: "Saved me months of development time." },
     { name: "Sophie Chen", avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face", testimonial: "Intuitive and powerful platform." }
   ];
@@ -155,20 +168,6 @@ const Index = () => {
     { feature: "Support", wordpress: "Community", launchly: "Real people" }
   ];
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Newsletter signup:", email);
-    setEmail("");
-  };
-
-  const handleLoginSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Login attempt:", loginEmail);
-    setLoginOpen(false);
-    setLoginEmail("");
-    setLoginPassword("");
-  };
-
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (newMessage.trim()) {
@@ -196,72 +195,31 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <EasterEggModal showEasterEgg={showEasterEgg} setShowEasterEgg={setShowEasterEgg} />
-
-      {/* Login Modal */}
-      <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
-        <DialogContent className="bg-gray-800 border-gray-700">
-          <DialogHeader>
-            <DialogTitle className="text-white">Sign In to Launchly</DialogTitle>
-            <DialogDescription className="text-gray-300">
-              Welcome back! Enter your credentials to continue.
-            </DialogDescription>
-          </DialogHeader>
-          <form onSubmit={handleLoginSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                Email address
-              </label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                value={loginEmail}
-                onChange={(e) => setLoginEmail(e.target.value)}
-                className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
-                Password
-              </label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                value={loginPassword}
-                onChange={(e) => setLoginPassword(e.target.value)}
-                className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
-                required
-              />
-            </div>
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
-              Sign In
-            </Button>
-            <p className="text-sm text-gray-400 text-center">
-              Don't have an account? <span className="text-blue-400 cursor-pointer">Sign up</span>
-            </p>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <DemoModal open={demoOpen} onOpenChange={setDemoOpen} />
+      <CTAModal open={ctaOpen} onOpenChange={setCTAOpen} />
 
       {/* Header */}
       <header className="fixed top-0 w-full bg-gray-900/80 backdrop-blur-lg border-b border-gray-800 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          <button 
+            onClick={scrollToTop}
+            className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent hover:scale-105 transition-transform"
+          >
             Launchly
-          </div>
+          </button>
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="hover:text-blue-400 transition-colors">Features</a>
-            <a href="#pricing" className="hover:text-blue-400 transition-colors">Pricing</a>
-            <a href="#dashboard" className="hover:text-blue-400 transition-colors">Dashboard</a>
-            <a href="#contact" className="hover:text-blue-400 transition-colors">Contact</a>
+            <button onClick={() => scrollToSection('features')} className="hover:text-blue-400 transition-colors">Features</button>
+            <button onClick={() => scrollToSection('roadmap')} className="hover:text-blue-400 transition-colors">Roadmap</button>
+            <button onClick={() => scrollToSection('dashboard')} className="hover:text-blue-400 transition-colors">Dashboard</button>
+            <button onClick={() => scrollToSection('testimonials')} className="hover:text-blue-400 transition-colors">Testimonials</button>
+            <button onClick={() => scrollToSection('pricing')} className="hover:text-blue-400 transition-colors">Pricing</button>
+            <button onClick={() => scrollToSection('newsletter')} className="hover:text-blue-400 transition-colors">Subscribe</button>
           </nav>
           <Button 
             className="bg-blue-600 hover:bg-blue-700"
-            onClick={() => setLoginOpen(true)}
+            onClick={() => setDemoOpen(true)}
           >
-            Sign In
+            Go to Demo
           </Button>
         </div>
       </header>
@@ -273,13 +231,14 @@ const Index = () => {
         currentTagline={currentTagline}
         taglines={taglines}
         handleMagneticCTA={handleMagneticCTA}
+        onCTAClick={() => setCTAOpen(true)}
       />
 
       <LiveCounter userCount={userCount} />
       <StartupRoadmap />
       <FeaturesSection />
 
-      {/* Fake Integration Carousel */}
+      {/* Integrations Section */}
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
@@ -416,14 +375,14 @@ const Index = () => {
                         </div>
                       </CardContent>
                     </Card>
-                    <Card className="bg-gray-700 border-gray-600">
+                    <Card className="bg-gray-600 border-gray-500">
                       <CardContent className="p-4">
                         <h3 className="text-lg font-semibold mb-4 text-white">Quick Actions</h3>
                         <div className="grid grid-cols-2 gap-3">
                           <Button 
                             variant="outline" 
                             size="sm" 
-                            className="border-gray-500 hover:border-blue-400 text-gray-300 hover:text-white"
+                            className="border-gray-400 hover:border-blue-400 text-gray-200 hover:text-white hover:bg-gray-500"
                             onClick={() => alert("Get Support clicked! This would open a support modal in a real app.")}
                           >
                             <Mail className="w-4 h-4 mr-2" />
@@ -432,7 +391,7 @@ const Index = () => {
                           <Button 
                             variant="outline" 
                             size="sm" 
-                            className="border-gray-500 hover:border-blue-400 text-gray-300 hover:text-white"
+                            className="border-gray-400 hover:border-blue-400 text-gray-200 hover:text-white hover:bg-gray-500"
                             onClick={() => alert("User Report clicked! This would generate a user report in a real app.")}
                           >
                             <FileText className="w-4 h-4 mr-2" />
@@ -505,6 +464,9 @@ const Index = () => {
                   src={user.avatar} 
                   alt={user.name}
                   className="w-20 h-20 rounded-full mx-auto mb-2 border-2 border-gray-700 hover:border-blue-400 transition-colors"
+                  onError={(e) => {
+                    e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=374151&color=fff&size=80`;
+                  }}
                 />
                 <p className="text-sm font-medium text-white">{user.name}</p>
               </div>
@@ -513,36 +475,8 @@ const Index = () => {
         </div>
       </section>
 
-      <PricingSection />
-
-      {/* Newsletter Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto text-center max-w-2xl">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">📬 Want launch tips & founder insights?</h2>
-          <p className="text-gray-300 text-lg mb-2">
-            Drop your email — no spam, just value.
-          </p>
-          <p className="text-gray-400 text-sm mb-8">
-            Insights, tips, and the occasional founder meme.
-          </p>
-          <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 flex-1"
-              required
-            />
-            <Button type="submit" className="bg-blue-600 hover:bg-blue-700 px-8">
-              Subscribe
-            </Button>
-          </form>
-          <p className="text-xs text-gray-400 mt-4">
-            No spam, unsubscribe at any time.
-          </p>
-        </div>
-      </section>
+      <PricingSection onCTAClick={() => setCTAOpen(true)} />
+      <NewsletterSection />
 
       {/* Animated CTA Section */}
       <section className="py-20 px-4 bg-gray-800/50">
@@ -555,6 +489,7 @@ const Index = () => {
             size="lg" 
             className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6 rounded-lg shadow-lg animate-pulse-slow magnetic-button"
             onMouseMove={handleMagneticCTA}
+            onClick={() => setCTAOpen(true)}
           >
             Try it Free
           </Button>
@@ -566,7 +501,7 @@ const Index = () => {
         <div className="container mx-auto">
           <div className="text-center mb-8">
             <p className="text-gray-400 text-sm">
-              Launchly is a demo project built to showcase high-end landing pages. Want one like this? Let's talk.
+              This site is a demo project to showcase freelance web design work.
             </p>
           </div>
           <div className="grid md:grid-cols-4 gap-8 mb-8">
@@ -578,36 +513,42 @@ const Index = () => {
                 Empowering founders to launch faster and smarter.
               </p>
               <div className="flex space-x-4">
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Twitter</a>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">LinkedIn</a>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">GitHub</a>
+                <a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">
+                  <Twitter className="w-5 h-5" />
+                </a>
+                <a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">
+                  <Linkedin className="w-5 h-5" />
+                </a>
+                <a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">
+                  <Github className="w-5 h-5" />
+                </a>
               </div>
             </div>
             <div>
               <h3 className="font-semibold mb-4 text-white">Product</h3>
               <ul className="space-y-2">
-                <li><a href="#features" className="text-gray-400 hover:text-blue-400 transition-colors">Features</a></li>
-                <li><a href="#pricing" className="text-gray-400 hover:text-blue-400 transition-colors">Pricing</a></li>
-                <li><a href="#dashboard" className="text-gray-400 hover:text-blue-400 transition-colors">Dashboard</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Integrations</a></li>
+                <li><button onClick={() => scrollToSection('features')} className="text-gray-400 hover:text-blue-400 transition-colors">Features</button></li>
+                <li><button onClick={() => scrollToSection('pricing')} className="text-gray-400 hover:text-blue-400 transition-colors">Pricing</button></li>
+                <li><button onClick={() => scrollToSection('dashboard')} className="text-gray-400 hover:text-blue-400 transition-colors">Dashboard</button></li>
+                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Integrations</a></li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold mb-4 text-white">Company</h3>
               <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">About</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Blog</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Careers</a></li>
-                <li><a href="#contact" className="text-gray-400 hover:text-blue-400 transition-colors">Contact</a></li>
+                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">About</a></li>
+                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Blog</a></li>
+                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Careers</a></li>
+                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Contact</a></li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold mb-4 text-white">Support</h3>
               <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Help Center</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Documentation</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Community</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">Status</a></li>
+                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Help Center</a></li>
+                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Documentation</a></li>
+                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Community</a></li>
+                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Status</a></li>
               </ul>
             </div>
           </div>
@@ -616,9 +557,9 @@ const Index = () => {
               © 2024 Launchly. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">Privacy Policy</a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">Terms of Service</a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">Cookie Policy</a>
+              <a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">Privacy Policy</a>
+              <a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">Terms of Service</a>
+              <a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">Cookie Policy</a>
             </div>
           </div>
         </div>
@@ -666,11 +607,11 @@ const Index = () => {
             </div>
             <div className="p-4 border-t border-gray-700">
               <form onSubmit={handleSendMessage} className="flex space-x-2">
-                <Input
+                <input
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Type a message..."
-                  className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 flex-1"
+                  className="bg-gray-700 border border-gray-600 text-white placeholder-gray-400 flex-1 px-3 py-2 rounded"
                 />
                 <Button type="submit" size="sm" className="bg-blue-600 hover:bg-blue-700">
                   Send
@@ -723,13 +664,16 @@ const Index = () => {
                   src={selectedAvatar.avatar} 
                   alt={selectedAvatar.name}
                   className="w-12 h-12 rounded-full"
+                  onError={(e) => {
+                    e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(selectedAvatar.name)}&background=374151&color=fff&size=48`;
+                  }}
                 />
                 <span>{selectedAvatar.name}</span>
               </DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
               <p className="text-gray-300 italic text-lg">"{selectedAvatar.testimonial}"</p>
-              <Button className="w-full bg-blue-600 hover:bg-blue-700">
+              <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => setCTAOpen(true)}>
                 Start Your Journey
               </Button>
             </div>

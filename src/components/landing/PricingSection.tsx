@@ -54,7 +54,11 @@ const pricing = [
   }
 ];
 
-export const PricingSection = () => {
+interface PricingSectionProps {
+  onCTAClick: () => void;
+}
+
+export const PricingSection = ({ onCTAClick }: PricingSectionProps) => {
   return (
     <section id="pricing" className="py-20 px-4">
       <div className="container mx-auto">
@@ -79,7 +83,10 @@ export const PricingSection = () => {
                   <span className="text-gray-400">{plan.period}</span>
                 </div>
                 <p className="text-gray-300 mb-6">{plan.description}</p>
-                <Button className={`w-full mb-6 ${plan.popular ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-700 hover:bg-gray-600'}`}>
+                <Button 
+                  className={`w-full mb-6 ${plan.popular ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-700 hover:bg-gray-600'}`}
+                  onClick={onCTAClick}
+                >
                   {plan.cta}
                 </Button>
                 <ul className="space-y-3">

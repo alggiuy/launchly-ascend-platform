@@ -27,7 +27,7 @@ const timelineSteps = [
 
 export const StartupRoadmap = () => {
   return (
-    <section className="py-20 px-4">
+    <section id="roadmap" className="py-20 px-4">
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">Your Startup Roadmap</h2>
@@ -37,8 +37,11 @@ export const StartupRoadmap = () => {
         </div>
         <div className="max-w-4xl mx-auto">
           <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-400 to-purple-500 h-full"></div>
+            {/* Timeline line - starts after first dot and ends before last dot */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-400 to-purple-500" style={{ 
+              top: '80px', 
+              height: 'calc(100% - 160px)' 
+            }}></div>
             
             {timelineSteps.map((step, index) => (
               <div key={index} className={`flex items-center mb-12 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} animate-slide-up`} style={{ animationDelay: `${index * 0.2}s` }}>

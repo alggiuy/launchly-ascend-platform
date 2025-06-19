@@ -5,23 +5,23 @@ import { Settings, Bell, ArrowUp, Star } from "lucide-react";
 const features = [
   {
     icon: <Settings className="w-8 h-8 text-blue-400" />,
-    title: "No devs needed. Just launch.",
-    description: "No more wrestling with setup. Jump straight into creating what matters."
+    title: "One-click Setup",
+    description: "No devs needed. Just launch."
   },
   {
     icon: <Bell className="w-8 h-8 text-blue-400" />,
-    title: "Know what's working instantly.",
-    description: "Real-time insights that actually help you make better decisions."
+    title: "Smart Analytics",
+    description: "Know what's working instantly."
   },
   {
     icon: <ArrowUp className="w-8 h-8 text-blue-400" />,
-    title: "No stress when traffic spikes.",
-    description: "Built to handle your success. Scale without breaking a sweat."
+    title: "Auto Scaling",
+    description: "Built to handle your success."
   },
   {
     icon: <Star className="w-8 h-8 text-blue-400" />,
-    title: "Talk to people who've launched, failed, and won.",
-    description: "Get advice from founders who've been there. You're not alone."
+    title: "Founder Support",
+    description: "Get help from people who've been there."
   }
 ];
 
@@ -42,7 +42,7 @@ export const FeaturesSection = () => {
                 <div className="mb-4 flex justify-center">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-white">{feature.title}</h3>
+                <h3 className="text-xl font-bold mb-2 text-white">{feature.title}</h3>
                 <p className="text-gray-300">{feature.description}</p>
               </CardContent>  
             </Card>
