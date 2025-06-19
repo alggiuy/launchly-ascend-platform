@@ -50,7 +50,7 @@ export const TestimonialsSection = () => {
                     className="w-12 h-12 rounded-full mr-4 border-2 border-gray-700"
                   />
                   <div>
-                    <p className="font-semibold">{testimonial.name}</p>
+                    <p className="font-semibold text-white">{testimonial.name}</p>
                     <p className="text-gray-400 text-sm">{testimonial.role}</p>
                   </div>
                 </div>
