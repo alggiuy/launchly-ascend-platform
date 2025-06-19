@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -92,13 +93,6 @@ const Index = () => {
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [konamiSequence]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIntegration(prev => (prev + 1) % integrations.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
 
   const dashboardCards = [
     {
@@ -371,14 +365,14 @@ const Index = () => {
                         </div>
                       </CardContent>
                     </Card>
-                    <Card className="bg-gray-600 border-gray-500">
+                    <Card className="bg-gray-700 border-gray-600">
                       <CardContent className="p-4">
                         <h3 className="text-lg font-semibold mb-4 text-white">Quick Actions</h3>
                         <div className="grid grid-cols-2 gap-3">
                           <Button 
                             variant="outline" 
                             size="sm" 
-                            className="border-gray-400 hover:border-blue-400 text-black hover:text-black hover:bg-gray-300 hover:scale-105 transition-all duration-200"
+                            className="border-gray-400 hover:border-blue-400 text-black hover:text-black bg-gray-300 hover:bg-gray-200 hover:scale-105 transition-all duration-200"
                             onClick={() => alert("Get Support clicked! This would open a support modal in a real app.")}
                           >
                             <Mail className="w-4 h-4 mr-2 text-black" />
@@ -387,7 +381,7 @@ const Index = () => {
                           <Button 
                             variant="outline" 
                             size="sm" 
-                            className="border-gray-400 hover:border-blue-400 text-black hover:text-black hover:bg-gray-300 hover:scale-105 transition-all duration-200 hover:shadow-lg"
+                            className="border-gray-400 hover:border-blue-400 text-black hover:text-black bg-gray-300 hover:bg-gray-200 hover:scale-105 transition-all duration-200 hover:shadow-lg"
                             onClick={() => alert("User Report clicked! This would generate a user report in a real app.")}
                           >
                             <FileText className="w-4 h-4 mr-2 text-black" />
@@ -437,37 +431,6 @@ const Index = () => {
               </div>
             </CardContent>
           </Card>
-        </div>
-      </section>
-
-      {/* User Avatar Grid */}
-      <section className="py-20 px-4 bg-gray-800/50">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Join successful founders</h2>
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-              See what our community has built with Launchly
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-4xl mx-auto">
-            {userAvatars.map((user, index) => (
-              <div 
-                key={index} 
-                className="text-center cursor-pointer hover:transform hover:scale-105 transition-all duration-300"
-                onClick={() => setSelectedAvatar(user)}
-              >
-                <img 
-                  src={user.avatar} 
-                  alt={user.name}
-                  className="w-20 h-20 rounded-full mx-auto mb-2 border-2 border-gray-700 hover:border-blue-400 transition-colors"
-                  onError={(e) => {
-                    e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=374151&color=fff&size=80`;
-                  }}
-                />
-                <p className="text-sm font-medium text-white">{user.name}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
