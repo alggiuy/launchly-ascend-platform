@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check, Star, ArrowUp, Bell, Settings, Home, Calendar, Mail, Package, FileText, User, MessageSquare, X, TrendingUp, Users, Zap, Code, Palette, BarChart3, Shield, Rocket, Briefcase, PenTool } from "lucide-react";
+import { Check, Star, ArrowUp, Bell, Settings, Home, Calendar, Mail, Package, FileText, User, MessageSquare, X, TrendingUp, Users, Zap, Code, Palette, BarChart3, Shield, Rocket, Briefcase, PenTool, Target, Lightbulb, ChevronLeft, ChevronRight } from "lucide-react";
 
 const Index = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +11,57 @@ const Index = () => {
   const [chatOpen, setChatOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedAvatar, setSelectedAvatar] = useState(null);
+  const [currentTagline, setCurrentTagline] = useState(0);
+  const [ctaClicks, setCtaClicks] = useState(0);
+  const [selectedPersona, setSelectedPersona] = useState("Founder");
+  const [konamiSequence, setKonamiSequence] = useState([]);
+  const [showEasterEgg, setShowEasterEgg] = useState(false);
+  const [currentIntegration, setCurrentIntegration] = useState(0);
+
+  const taglines = [
+    "Launch Smarter.",
+    "Ship in Days, Not Weeks.",
+    "Make Your Idea Real.",
+    "Stop Wasting Time."
+  ];
+
+  const personas = ["Founder", "Freelancer", "Agency"];
+
+  const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+
+  const integrations = [
+    { name: "Stripe", icon: "💳" },
+    { name: "Notion", icon: "📝" },
+    { name: "Slack", icon: "💬" },
+    { name: "Discord", icon: "🎮" },
+    { name: "Shopify", icon: "🛍️" },
+    { name: "Zapier", icon: "⚡" },
+    { name: "Mailchimp", icon: "📧" },
+    { name: "Google Analytics", icon: "📊" }
+  ];
+
+  const timelineSteps = [
+    {
+      icon: <Target className="w-8 h-8 text-blue-400" />,
+      title: "Validate your idea",
+      description: "Test market demand before you build"
+    },
+    {
+      icon: <Rocket className="w-8 h-8 text-blue-400" />,
+      title: "Launch in hours",
+      description: "Deploy your MVP with zero complexity"
+    },
+    {
+      icon: <BarChart3 className="w-8 h-8 text-blue-400" />,
+      title: "Grow with data",
+      description: "Scale based on real user insights"
+    },
+    {
+      icon: <Star className="w-8 h-8 text-blue-400" />,
+      title: "Celebrate success",
+      description: "Join thousands of profitable founders"
+    }
+  ];
 
   // Animated user counter
   useEffect(() => {
@@ -30,6 +81,61 @@ const Index = () => {
     }, 50);
 
     return () => clearInterval(timer);
+  }, []);
+
+  // Tagline rotator
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTagline(prev => (prev + 1) % taglines.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // CTA click counter animation
+  useEffect(() => {
+    const targetClicks = 427;
+    const duration = 1500;
+    const increment = targetClicks / (duration / 50);
+    
+    const timer = setInterval(() => {
+      setCtaClicks(prev => {
+        const newCount = prev + increment;
+        if (newCount >= targetClicks) {
+          clearInterval(timer);
+          return targetClicks;
+        }
+        return Math.floor(newCount);
+      });
+    }, 50);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  // Konami code listener
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      const newSequence = [...konamiSequence, event.code];
+      if (newSequence.length > konamiCode.length) {
+        newSequence.shift();
+      }
+      setKonamiSequence(newSequence);
+
+      if (JSON.stringify(newSequence) === JSON.stringify(konamiCode)) {
+        setShowEasterEgg(true);
+        setTimeout(() => setShowEasterEgg(false), 5000);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [konamiSequence]);
+
+  // Integration carousel auto-scroll
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIntegration(prev => (prev + 1) % integrations.length);
+    }, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   const features = [
@@ -198,14 +304,64 @@ const Index = () => {
     { text: "Full access to all features for 14 days - no credit card required. You can build, test, and launch completely free!", sender: "bot" }
   ];
 
+  const getPersonaContent = () => {
+    switch(selectedPersona) {
+      case "Freelancer":
+        return {
+          headline: "Launch your freelance empire today",
+          subtext: "Build your portfolio, manage clients, and scale your business with our proven system designed for independent professionals."
+        };
+      case "Agency":
+        return {
+          headline: "Scale your agency operations",
+          subtext: "Streamline client delivery, manage multiple projects, and grow your team with enterprise-grade tools."
+        };
+      default:
+        return {
+          headline: "Launch your next idea today",
+          subtext: "Stop overthinking and start building. Join thousands of founders who've turned their ideas into profitable businesses with our proven launch system."
+        };
+    }
+  };
+
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Newsletter signup:", email);
     setEmail("");
   };
 
+  const handleMagneticCTA = (e: React.MouseEvent) => {
+    const button = e.currentTarget as HTMLElement;
+    const rect = button.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    
+    button.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px) scale(1.05)`;
+    
+    setTimeout(() => {
+      button.style.transform = 'translate(0px, 0px) scale(1)';
+    }, 150);
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      {/* Easter Egg Modal */}
+      {showEasterEgg && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] animate-fade-in">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-8 rounded-lg text-center max-w-md animate-scale-in">
+            <h2 className="text-2xl font-bold mb-4">🎉 You found it!</h2>
+            <p className="text-lg mb-4">Konami Code Master Detected!</p>
+            <p className="text-sm opacity-80">True founders know the secrets...</p>
+            <Button 
+              onClick={() => setShowEasterEgg(false)}
+              className="mt-4 bg-white text-blue-600 hover:bg-gray-100"
+            >
+              Continue Building
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="fixed top-0 w-full bg-gray-900/80 backdrop-blur-lg border-b border-gray-800 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -227,16 +383,56 @@ const Index = () => {
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4">
         <div className="container mx-auto text-center max-w-4xl">
+          {/* Personality Picker */}
+          <div className="flex justify-center mb-8">
+            <div className="bg-gray-800 p-1 rounded-lg flex space-x-1">
+              {personas.map((persona) => (
+                <button
+                  key={persona}
+                  onClick={() => setSelectedPersona(persona)}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                    selectedPersona === persona
+                      ? 'bg-blue-600 text-white'
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  {persona}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-blue-400 bg-clip-text text-transparent leading-tight animate-slide-up">
-            Launch your next idea today
+            {getPersonaContent().headline}
           </h1>
+          
+          {/* Dynamic Tagline Rotator */}
+          <div className="mb-4 h-16 flex items-center justify-center">
+            <p className="text-3xl md:text-4xl font-bold text-blue-400 animate-fade-in" key={currentTagline}>
+              {taglines[currentTagline]}
+            </p>
+          </div>
+
           <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in">
-            Stop overthinking and start building. Join thousands of founders who've turned their ideas into profitable businesses with our proven launch system.
+            {getPersonaContent().subtext}
           </p>
-          <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+          
+          <Button 
+            size="lg" 
+            className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 magnetic-button"
+            onMouseMove={handleMagneticCTA}
+          >
             Try It Free
           </Button>
-          <p className="text-sm text-gray-400 mt-4">No credit card required • 14-day free trial</p>
+          
+          {/* Real-Time CTA Click Counter */}
+          <div className="mt-4 text-center">
+            <p className="text-sm text-gray-400">
+              🔁 <span className="text-blue-400 font-semibold">{ctaClicks}</span> people clicked this today
+            </p>
+          </div>
+          
+          <p className="text-sm text-gray-400 mt-2">No credit card required • 14-day free trial</p>
         </div>
       </section>
 
@@ -248,6 +444,44 @@ const Index = () => {
               {userCount.toLocaleString()}+
             </p>
             <p className="text-gray-300">founders who launched with Launchly</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Memory Lane Timeline */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Your founder journey</h2>
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+              From idea to profitable business in four simple steps
+            </p>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="relative">
+              {/* Timeline line */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-400 to-purple-500 h-full"></div>
+              
+              {timelineSteps.map((step, index) => (
+                <div key={index} className={`flex items-center mb-12 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} animate-slide-up`} style={{ animationDelay: `${index * 0.2}s` }}>
+                  <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
+                    <Card className="bg-gray-800 border-gray-700 hover:border-blue-500 transition-all duration-300 hover:transform hover:scale-105">
+                      <CardContent className="p-6">
+                        <div className={`flex items-center ${index % 2 === 0 ? 'justify-end' : 'justify-start'} mb-4`}>
+                          {step.icon}
+                        </div>
+                        <h3 className="text-xl font-semibold mb-2 text-white">{step.title}</h3>
+                        <p className="text-gray-300">{step.description}</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                  <div className="w-8 h-8 bg-blue-600 rounded-full border-4 border-gray-900 flex items-center justify-center z-10">
+                    <div className="w-3 h-3 bg-white rounded-full"></div>
+                  </div>
+                  <div className="w-1/2"></div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -270,6 +504,75 @@ const Index = () => {
                   </div>
                   <h3 className="text-xl font-semibold mb-2 text-white">{feature.title}</h3>
                   <p className="text-gray-300">{feature.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Fake Integration Carousel */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Integrates with your favorite tools</h2>
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+              Connect Launchly with the tools you already love and use
+            </p>
+          </div>
+          <div className="relative overflow-hidden">
+            <div className="flex space-x-6 animate-slide-x" style={{ transform: `translateX(-${currentIntegration * 120}px)` }}>
+              {[...integrations, ...integrations].map((integration, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 group relative"
+                >
+                  <Card className="bg-gray-800 border-gray-700 hover:border-blue-500 transition-all duration-300 hover:transform hover:scale-105 w-28 h-28">
+                    <CardContent className="p-4 flex flex-col items-center justify-center h-full">
+                      <div className="text-3xl mb-2">{integration.icon}</div>
+                      <p className="text-xs text-gray-400 text-center">{integration.name}</p>
+                    </CardContent>
+                  </Card>
+                  <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                    Coming soon
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 px-4 bg-gray-800/50">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Loved by founders worldwide</h2>
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+              Join thousands of successful entrepreneurs who've launched with Launchly.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className="bg-gray-800 border-gray-700 hover:border-blue-500 transition-all duration-300 animate-slide-up" style={{ animationDelay: `${index * 0.3}s` }}>
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-gray-300 mb-6 italic">"{testimonial.quote}"</p>
+                  <div className="flex items-center">
+                    <img 
+                      src={testimonial.avatar} 
+                      alt={testimonial.name}
+                      className="w-12 h-12 rounded-full mr-4 border-2 border-gray-700"
+                    />
+                    <div>
+                      <p className="font-semibold">{testimonial.name}</p>
+                      <p className="text-gray-400 text-sm">{testimonial.role}</p>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -504,43 +807,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-20 px-4 bg-gray-800/50">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Loved by founders worldwide</h2>
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-              Join thousands of successful entrepreneurs who've launched with Launchly.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="bg-gray-800 border-gray-700 hover:border-blue-500 transition-all duration-300 animate-slide-up" style={{ animationDelay: `${index * 0.3}s` }}>
-                <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                    ))}
-                  </div>
-                  <p className="text-gray-300 mb-6 italic">"{testimonial.quote}"</p>
-                  <div className="flex items-center">
-                    <img 
-                      src={testimonial.avatar} 
-                      alt={testimonial.name}
-                      className="w-12 h-12 rounded-full mx-auto mb-2 border-2 border-gray-700 hover:border-blue-400 transition-colors"
-                    />
-                    <div>
-                      <p className="font-semibold">{testimonial.name}</p>
-                      <p className="text-gray-400 text-sm">{testimonial.role}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Newsletter Section */}
       <section className="py-20 px-4">
         <div className="container mx-auto text-center max-w-2xl">
@@ -574,7 +840,11 @@ const Index = () => {
           <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
             Join thousands of founders who've built successful businesses with Launchly.
           </p>
-          <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6 rounded-lg shadow-lg animate-pulse-slow">
+          <Button 
+            size="lg" 
+            className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6 rounded-lg shadow-lg animate-pulse-slow magnetic-button"
+            onMouseMove={handleMagneticCTA}
+          >
             Try It Free
           </Button>
         </div>
