@@ -43,23 +43,23 @@ const Index = () => {
   const timelineSteps = [
     {
       icon: <Target className="w-8 h-8 text-blue-400" />,
-      title: "Validate your idea",
-      description: "Test market demand before you build"
+      title: "Test your idea with real feedback",
+      description: "Get validation before you invest time building"
     },
     {
       icon: <Rocket className="w-8 h-8 text-blue-400" />,
-      title: "Launch in hours",
-      description: "Deploy your MVP with zero complexity"
+      title: "Publish your MVP faster than ever",
+      description: "Go live without the usual technical headaches"
     },
     {
       icon: <BarChart3 className="w-8 h-8 text-blue-400" />,
-      title: "Grow with data",
-      description: "Scale based on real user insights"
+      title: "Make decisions backed by live analytics",
+      description: "See what works and double down on it"
     },
     {
       icon: <Star className="w-8 h-8 text-blue-400" />,
-      title: "Celebrate success",
-      description: "Join thousands of profitable founders"
+      title: "Because launching should feel like winning",
+      description: "Celebrate with thousands of successful founders"
     }
   ];
 
@@ -141,23 +141,23 @@ const Index = () => {
   const features = [
     {
       icon: <Settings className="w-8 h-8 text-blue-400" />,
-      title: "Lightning Setup",
-      description: "Get your business online in minutes, not weeks. Our streamlined process handles the technical complexity."
+      title: "Skip configs, start building",
+      description: "No more wrestling with setup. Jump straight into creating what matters."
     },
     {
       icon: <Bell className="w-8 h-8 text-blue-400" />,
-      title: "Smart Analytics",
-      description: "Track what matters with intelligent insights that help you make data-driven decisions from day one."
+      title: "Know what's working instantly",
+      description: "Real-time insights that actually help you make better decisions."
     },
     {
       icon: <ArrowUp className="w-8 h-8 text-blue-400" />,
-      title: "Scale Automatically",
-      description: "Built to grow with you. Our infrastructure scales seamlessly as your business expands globally."
+      title: "No stress when traffic spikes",
+      description: "Built to handle your success. Scale without breaking a sweat."
     },
     {
       icon: <Star className="w-8 h-8 text-blue-400" />,
-      title: "Expert Support",
-      description: "Get guidance from successful founders who've built and sold companies. You're never alone."
+      title: "Real help from people who've been there",
+      description: "Get advice from founders who've launched, scaled, and sold. You're not alone."
     }
   ];
 
@@ -174,7 +174,8 @@ const Index = () => {
         "Template Library",
         "Payment Processing"
       ],
-      popular: false
+      popular: false,
+      cta: "Start for $0"
     },
     {
       name: "Pro",
@@ -189,7 +190,8 @@ const Index = () => {
         "A/B Testing",
         "API Access"
       ],
-      popular: true
+      popular: true,
+      cta: "Upgrade Anytime"
     },
     {
       name: "Enterprise",
@@ -204,7 +206,8 @@ const Index = () => {
         "Team Collaboration",
         "Custom Integrations"
       ],
-      popular: false
+      popular: false,
+      cta: "Pick Your Plan →"
     }
   ];
 
@@ -213,19 +216,19 @@ const Index = () => {
       name: "Sarah Chen",
       role: "Founder, TechFlow",
       avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
-      quote: "Launchly helped me validate and launch my SaaS in just 2 weeks. The analytics showed me exactly what my users wanted."
+      quote: "This saved me weeks of dev work. Seriously."
     },
     {
       name: "Marcus Rodriguez",
       role: "CEO, GrowthLab",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-      quote: "From idea to first customer in 10 days. The support team guided me through every step of the process."
+      quote: "Launchly felt like a co-founder with superpowers."
     },
     {
       name: "Emma Thompson",
       role: "Founder, DesignCo",
       avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-      quote: "The dashboard insights are incredible. I can see exactly which features drive engagement and revenue."
+      quote: "From idea to launch in 48 hours. I couldn't believe it."
     }
   ];
 
@@ -308,18 +311,18 @@ const Index = () => {
     switch(selectedPersona) {
       case "Freelancer":
         return {
-          headline: "Launch your freelance empire today",
-          subtext: "Build your portfolio, manage clients, and scale your business with our proven system designed for independent professionals."
+          headline: "Launch What Matters",
+          subtext: "Turn your freelance hustle into a real business. Join thousands of independent pros who skipped the fluff and built something lasting with Launchly."
         };
       case "Agency":
         return {
-          headline: "Scale your agency operations",
-          subtext: "Streamline client delivery, manage multiple projects, and grow your team with enterprise-grade tools."
+          headline: "Launch What Matters",
+          subtext: "Scale your agency operations without the usual chaos. Join thousands of agency owners who streamlined their process with Launchly."
         };
       default:
         return {
-          headline: "Launch your next idea today",
-          subtext: "Stop overthinking and start building. Join thousands of founders who've turned their ideas into profitable businesses with our proven launch system."
+          headline: "Launch What Matters",
+          subtext: "Turn your idea into something real — fast. Join thousands of founders who skipped the fluff and built businesses with Launchly."
         };
     }
   };
@@ -422,7 +425,7 @@ const Index = () => {
             className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 magnetic-button"
             onMouseMove={handleMagneticCTA}
           >
-            Try It Free
+            Try it Free
           </Button>
           
           {/* Real-Time CTA Click Counter */}
@@ -432,7 +435,7 @@ const Index = () => {
             </p>
           </div>
           
-          <p className="text-sm text-gray-400 mt-2">No credit card required • 14-day free trial</p>
+          <p className="text-sm text-gray-400 mt-2">No credit card needed · 14-day free trial</p>
         </div>
       </section>
 
@@ -441,9 +444,8 @@ const Index = () => {
         <div className="container mx-auto text-center">
           <div className="bg-gray-800/50 rounded-2xl p-8 max-w-md mx-auto border border-gray-700">
             <p className="text-3xl font-bold text-blue-400 mb-2">
-              {userCount.toLocaleString()}+
+              🔥 {userCount.toLocaleString()} founders and counting... You're next.
             </p>
-            <p className="text-gray-300">founders who launched with Launchly</p>
           </div>
         </div>
       </section>
@@ -452,9 +454,9 @@ const Index = () => {
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Your founder journey</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Your Startup Roadmap</h2>
             <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-              From idea to profitable business in four simple steps
+              From 'I have an idea' to 'I just launched' — all in one platform.
             </p>
           </div>
           <div className="max-w-4xl mx-auto">
@@ -490,9 +492,9 @@ const Index = () => {
       <section id="features" className="py-20 px-4 bg-gray-800/50">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Everything you need to launch</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">⚡ Zero to Launch in Minutes</h2>
             <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-              Our platform handles the complexity so you can focus on what matters - building your business.
+              Everything you need — nothing you don't.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -540,6 +542,11 @@ const Index = () => {
               ))}
             </div>
           </div>
+          <div className="text-center mt-8">
+            <p className="text-gray-400">
+              More integrations coming soon. Got a tool you love? Let us know.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -584,9 +591,9 @@ const Index = () => {
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Built for: Freelancers. Startups. Creators.</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Who's Launchly for? You.</h2>
             <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-              Whatever your business model, Launchly adapts to your needs.
+              Whether you're solo or scaling, Launchly adapts to your journey.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -609,9 +616,9 @@ const Index = () => {
       <section id="dashboard" className="py-20 px-4 bg-gray-800/50">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Your command center</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Your Control Center</h2>
             <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-              Monitor your progress, track metrics, and make data-driven decisions with our intuitive dashboard.
+              See everything, tweak anything — without leaving your browser.
             </p>
           </div>
           <div className="max-w-6xl mx-auto">
@@ -705,9 +712,9 @@ const Index = () => {
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Why Launchly?</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Why Settle for Templates?</h2>
             <p className="text-gray-300 text-lg">
-              See how we compare to traditional solutions
+              Here's what sets Launchly apart.
             </p>
           </div>
           <Card className="bg-gray-800 border-gray-700">
@@ -769,9 +776,9 @@ const Index = () => {
       <section id="pricing" className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Simple, transparent pricing</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Built to Scale With You</h2>
             <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-              Choose the plan that fits your journey. Upgrade or downgrade at any time.
+              Start small. Grow big. Always know what you're paying for.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -790,7 +797,7 @@ const Index = () => {
                   </div>
                   <p className="text-gray-300 mb-6">{plan.description}</p>
                   <Button className={`w-full mb-6 ${plan.popular ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-700 hover:bg-gray-600'}`}>
-                    Get Started
+                    {plan.cta}
                   </Button>
                   <ul className="space-y-3">
                     {plan.features.map((feature, featureIndex) => (
@@ -810,9 +817,9 @@ const Index = () => {
       {/* Newsletter Section */}
       <section className="py-20 px-4">
         <div className="container mx-auto text-center max-w-2xl">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Stay in the loop</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">📬 Want launch tips & founder insights?</h2>
           <p className="text-gray-300 text-lg mb-8">
-            Get weekly insights, launch tips, and success stories delivered to your inbox.
+            Drop your email — no spam, just value.
           </p>
           <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
             <Input
@@ -836,16 +843,16 @@ const Index = () => {
       {/* Animated CTA Section */}
       <section className="py-20 px-4 bg-gray-800/50">
         <div className="container mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Ready to launch?</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Let's Launch This Thing</h2>
           <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-            Join thousands of founders who've built successful businesses with Launchly.
+            No more 'someday'. Make it today.
           </p>
           <Button 
             size="lg" 
             className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6 rounded-lg shadow-lg animate-pulse-slow magnetic-button"
             onMouseMove={handleMagneticCTA}
           >
-            Try It Free
+            Try it Free
           </Button>
         </div>
       </section>
