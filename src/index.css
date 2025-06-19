@@ -16,7 +16,7 @@
 
 @layer utilities {
   .animate-scroll-left {
-    animation: scroll-left 20s linear infinite;
+    animation: scroll-left 30s linear infinite;
   }
   
   .animate-slide-up {
@@ -41,7 +41,7 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-33.33%);
   }
 }
 

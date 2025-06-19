@@ -217,8 +217,12 @@ const Index = () => {
       />
 
       <LiveCounter userCount={userCount} />
-      <StartupRoadmap />
+      
+      {/* Features Section - moved above Roadmap */}
       <FeaturesSection />
+      
+      {/* Startup Roadmap - moved below Features */}
+      <StartupRoadmap />
 
       {/* Integrations Section with Continuous Scroll */}
       <section className="py-20 px-4">
@@ -231,7 +235,7 @@ const Index = () => {
           </div>
           <div className="relative overflow-hidden">
             <div className="flex space-x-6 animate-scroll-left">
-              {/* Duplicate integrations for seamless loop */}
+              {/* Triple the integrations for seamless infinite loop */}
               {[...integrations, ...integrations, ...integrations].map((integration, index) => (
                 <div
                   key={index}
