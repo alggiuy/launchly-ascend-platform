@@ -1,13 +1,36 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check, Star, ArrowUp, Bell, Settings, Home, Calendar, Mail, Package, FileText, User, MessageSquare } from "lucide-react";
+import { Check, Star, ArrowUp, Bell, Settings, Home, Calendar, Mail, Package, FileText, User, MessageSquare, X, TrendingUp, Users, Zap, Code, Palette, BarChart3, Shield, Rocket, Briefcase, PenTool } from "lucide-react";
 
 const Index = () => {
   const [email, setEmail] = useState("");
+  const [userCount, setUserCount] = useState(0);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedAvatar, setSelectedAvatar] = useState(null);
+
+  // Animated user counter
+  useEffect(() => {
+    const targetCount = 13247;
+    const duration = 2000;
+    const increment = targetCount / (duration / 50);
+    
+    const timer = setInterval(() => {
+      setUserCount(prev => {
+        const newCount = prev + increment;
+        if (newCount >= targetCount) {
+          clearInterval(timer);
+          return targetCount;
+        }
+        return Math.floor(newCount);
+      });
+    }, 50);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const features = [
     {
@@ -100,11 +123,85 @@ const Index = () => {
     }
   ];
 
+  const dashboardCards = [
+    {
+      id: 1,
+      title: "Revenue Growth",
+      value: "$45,280",
+      change: "+23%",
+      icon: <TrendingUp className="w-6 h-6 text-green-400" />,
+      chart: true
+    },
+    {
+      id: 2,
+      title: "Active Users",
+      value: "8,547",
+      change: "+12%",
+      icon: <Users className="w-6 h-6 text-blue-400" />
+    },
+    {
+      id: 3,
+      title: "Conversion Rate",
+      value: "3.2%",
+      change: "+0.8%",
+      icon: <Zap className="w-6 h-6 text-purple-400" />
+    },
+    {
+      id: 4,
+      title: "Performance Score",
+      value: "98.5",
+      change: "+2.1",
+      icon: <BarChart3 className="w-6 h-6 text-orange-400" />
+    }
+  ];
+
+  const userAvatars = [
+    { name: "Alex Johnson", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", testimonial: "Launched my e-commerce store in 3 days!" },
+    { name: "Lisa Park", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", testimonial: "Perfect for my consulting business." },
+    { name: "David Kim", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face", testimonial: "Analytics helped me optimize conversions." },
+    { name: "Maria Santos", avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face", testimonial: "Best investment for my startup." },
+    { name: "James Wilson", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", testimonial: "Saved me months of development time." },
+    { name: "Sophie Chen", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", testimonial: "Intuitive and powerful platform." }
+  ];
+
+  const useCases = [
+    {
+      icon: <Briefcase className="w-8 h-8 text-blue-400" />,
+      title: "Freelancers",
+      description: "Build your portfolio and client management system. Showcase your work and streamline your business."
+    },
+    {
+      icon: <Rocket className="w-8 h-8 text-blue-400" />,
+      title: "Startups",
+      description: "Launch your MVP fast and iterate based on real user feedback. Get to market before your competition."
+    },
+    {
+      icon: <PenTool className="w-8 h-8 text-blue-400" />,
+      title: "Creators",
+      description: "Monetize your content and build a loyal audience. Turn your passion into a profitable business."
+    }
+  ];
+
+  const comparisonData = [
+    { feature: "Setup Time", wordpress: "2-4 weeks", launchly: "2-4 hours" },
+    { feature: "Design Freedom", wordpress: "Limited", launchly: "Unlimited" },
+    { feature: "Built-in Analytics", wordpress: "Plugin Required", launchly: "Included" },
+    { feature: "Performance", wordpress: "Varies", launchly: "Optimized" },
+    { feature: "Support", wordpress: "Community", launchly: "24/7 Expert" }
+  ];
+
+  const chatMessages = [
+    { text: "Hi! I'm here to help you launch your next idea. What can I assist you with today?", sender: "bot" },
+    { text: "How quickly can I get started?", sender: "user" },
+    { text: "You can launch your first project in under 10 minutes! Would you like me to show you how?", sender: "bot" },
+    { text: "What's included in the free trial?", sender: "user" },
+    { text: "Full access to all features for 14 days - no credit card required. You can build, test, and launch completely free!", sender: "bot" }
+  ];
+
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Newsletter signup:", email);
     setEmail("");
-    // Here you would typically send the email to your backend
   };
 
   return (
@@ -130,16 +227,28 @@ const Index = () => {
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4">
         <div className="container mx-auto text-center max-w-4xl">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-blue-400 bg-clip-text text-transparent leading-tight">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-blue-400 bg-clip-text text-transparent leading-tight animate-slide-up">
             Launch your next idea today
           </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in">
             Stop overthinking and start building. Join thousands of founders who've turned their ideas into profitable businesses with our proven launch system.
           </p>
           <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
             Try It Free
           </Button>
           <p className="text-sm text-gray-400 mt-4">No credit card required • 14-day free trial</p>
+        </div>
+      </section>
+
+      {/* Live User Counter */}
+      <section className="py-12 px-4">
+        <div className="container mx-auto text-center">
+          <div className="bg-gray-800/50 rounded-2xl p-8 max-w-md mx-auto border border-gray-700">
+            <p className="text-3xl font-bold text-blue-400 mb-2">
+              {userCount.toLocaleString()}+
+            </p>
+            <p className="text-gray-300">founders who launched with Launchly</p>
+          </div>
         </div>
       </section>
 
@@ -154,7 +263,7 @@ const Index = () => {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="bg-gray-800 border-gray-700 hover:border-blue-500 transition-all duration-300 hover:transform hover:scale-105">
+              <Card key={index} className="bg-gray-800 border-gray-700 hover:border-blue-500 transition-all duration-300 hover:transform hover:scale-105 animate-slide-up" style={{ animationDelay: `${index * 0.2}s` }}>
                 <CardContent className="p-6 text-center">
                   <div className="mb-4 flex justify-center">
                     {feature.icon}
@@ -168,8 +277,33 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Dashboard Preview */}
-      <section id="dashboard" className="py-20 px-4">
+      {/* Use Case Tiles */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Built for: Freelancers. Startups. Creators.</h2>
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+              Whatever your business model, Launchly adapts to your needs.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {useCases.map((useCase, index) => (
+              <Card key={index} className="bg-gray-800 border-gray-700 hover:border-blue-500 transition-all duration-300 hover:transform hover:scale-105">
+                <CardContent className="p-6 text-center">
+                  <div className="mb-4 flex justify-center">
+                    {useCase.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 text-white">{useCase.title}</h3>
+                  <p className="text-gray-300">{useCase.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Interactive Dashboard Preview */}
+      <section id="dashboard" className="py-20 px-4 bg-gray-800/50">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Your command center</h2>
@@ -188,40 +322,32 @@ const Index = () => {
                   </div>
                 </div>
                 <div className="p-8">
-                  <div className="grid md:grid-cols-3 gap-6 mb-8">
-                    <Card className="bg-gray-700 border-gray-600">
-                      <CardContent className="p-4">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="text-gray-300">Revenue</p>
-                            <p className="text-2xl font-bold text-green-400">$12,450</p>
+                  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    {dashboardCards.map((card) => (
+                      <Card 
+                        key={card.id} 
+                        className="bg-gray-700 border-gray-600 hover:border-blue-500 transition-all duration-300 cursor-pointer hover:transform hover:scale-105"
+                        onClick={() => setSelectedCard(card)}
+                      >
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center space-x-2">
+                              {card.icon}
+                              <p className="text-gray-300 text-sm">{card.title}</p>
+                            </div>
                           </div>
-                          <ArrowUp className="text-green-400" />
-                        </div>
-                      </CardContent>
-                    </Card>
-                    <Card className="bg-gray-700 border-gray-600">
-                      <CardContent className="p-4">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="text-gray-300">Users</p>
-                            <p className="text-2xl font-bold text-blue-400">2,847</p>
-                          </div>
-                          <User className="text-blue-400" />
-                        </div>
-                      </CardContent>
-                    </Card>
-                    <Card className="bg-gray-700 border-gray-600">
-                      <CardContent className="p-4">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="text-gray-300">Growth</p>
-                            <p className="text-2xl font-bold text-purple-400">+23%</p>
-                          </div>
-                          <Star className="text-purple-400" />
-                        </div>
-                      </CardContent>
-                    </Card>
+                          <p className="text-2xl font-bold text-white">{card.value}</p>
+                          <p className="text-green-400 text-sm">{card.change}</p>
+                          {card.chart && (
+                            <div className="mt-3 h-12 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded flex items-end space-x-1 p-2">
+                              {[40, 60, 80, 45, 90, 70, 85].map((height, i) => (
+                                <div key={i} className="bg-blue-400 rounded-sm flex-1" style={{ height: `${height}%` }}></div>
+                              ))}
+                            </div>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ))}
                   </div>
                   <div className="grid md:grid-cols-2 gap-6">
                     <Card className="bg-gray-700 border-gray-600">
@@ -272,8 +398,72 @@ const Index = () => {
         </div>
       </section>
 
+      {/* WordPress vs Launchly Comparison */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Why Launchly?</h2>
+            <p className="text-gray-300 text-lg">
+              See how we compare to traditional solutions
+            </p>
+          </div>
+          <Card className="bg-gray-800 border-gray-700">
+            <CardContent className="p-0">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-700">
+                      <th className="text-left p-6 text-lg font-semibold">Feature</th>
+                      <th className="text-center p-6 text-lg font-semibold text-gray-400">WordPress</th>
+                      <th className="text-center p-6 text-lg font-semibold text-blue-400">Launchly</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {comparisonData.map((row, index) => (
+                      <tr key={index} className="border-b border-gray-700/50">
+                        <td className="p-6 font-medium">{row.feature}</td>
+                        <td className="p-6 text-center text-gray-400">{row.wordpress}</td>
+                        <td className="p-6 text-center text-blue-400 font-semibold">{row.launchly}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* User Avatar Grid */}
+      <section className="py-20 px-4 bg-gray-800/50">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Join successful founders</h2>
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+              See what our community has built with Launchly
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-4xl mx-auto">
+            {userAvatars.map((user, index) => (
+              <div 
+                key={index} 
+                className="text-center cursor-pointer hover:transform hover:scale-105 transition-all duration-300"
+                onClick={() => setSelectedAvatar(user)}
+              >
+                <img 
+                  src={user.avatar} 
+                  alt={user.name}
+                  className="w-20 h-20 rounded-full mx-auto mb-2 border-2 border-gray-700 hover:border-blue-400 transition-colors"
+                />
+                <p className="text-sm font-medium">{user.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 px-4 bg-gray-800/50">
+      <section id="pricing" className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Simple, transparent pricing</h2>
@@ -315,7 +505,7 @@ const Index = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-gray-800/50">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Loved by founders worldwide</h2>
@@ -325,7 +515,7 @@ const Index = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className="bg-gray-800 border-gray-700 hover:border-blue-500 transition-all duration-300">
+              <Card key={index} className="bg-gray-800 border-gray-700 hover:border-blue-500 transition-all duration-300 animate-slide-up" style={{ animationDelay: `${index * 0.3}s` }}>
                 <CardContent className="p-6">
                   <div className="flex items-center mb-4">
                     {[...Array(5)].map((_, i) => (
@@ -337,7 +527,7 @@ const Index = () => {
                     <img 
                       src={testimonial.avatar} 
                       alt={testimonial.name}
-                      className="w-12 h-12 rounded-full mr-4"
+                      className="w-12 h-12 rounded-full mx-auto mb-2 border-2 border-gray-700 hover:border-blue-400 transition-colors"
                     />
                     <div>
                       <p className="font-semibold">{testimonial.name}</p>
@@ -352,7 +542,7 @@ const Index = () => {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-20 px-4 bg-gray-800/50">
+      <section className="py-20 px-4">
         <div className="container mx-auto text-center max-w-2xl">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">Stay in the loop</h2>
           <p className="text-gray-300 text-lg mb-8">
@@ -374,6 +564,19 @@ const Index = () => {
           <p className="text-xs text-gray-400 mt-4">
             No spam, unsubscribe at any time.
           </p>
+        </div>
+      </section>
+
+      {/* Animated CTA Section */}
+      <section className="py-20 px-4 bg-gray-800/50">
+        <div className="container mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Ready to launch?</h2>
+          <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+            Join thousands of founders who've built successful businesses with Launchly.
+          </p>
+          <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6 rounded-lg shadow-lg animate-pulse-slow">
+            Try It Free
+          </Button>
         </div>
       </section>
 
@@ -434,6 +637,112 @@ const Index = () => {
           </div>
         </div>
       </footer>
+
+      {/* Floating Chat Assistant */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <Button
+          onClick={() => setChatOpen(!chatOpen)}
+          className="bg-blue-600 hover:bg-blue-700 rounded-full p-4 shadow-lg animate-pulse-slow"
+        >
+          <MessageSquare className="w-6 h-6" />
+          <span className="ml-2 hidden sm:inline">Need help?</span>
+        </Button>
+        
+        {chatOpen && (
+          <div className="absolute bottom-16 right-0 w-80 bg-gray-800 border border-gray-700 rounded-lg shadow-xl animate-slide-up">
+            <div className="p-4 border-b border-gray-700 flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                  <MessageSquare className="w-4 h-4" />
+                </div>
+                <span className="font-semibold">Launchly Assistant</span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setChatOpen(false)}
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            <div className="p-4 max-h-64 overflow-y-auto space-y-3">
+              {chatMessages.map((message, index) => (
+                <div key={index} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-xs px-3 py-2 rounded-lg ${
+                    message.sender === 'user' 
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-gray-700 text-gray-300'
+                  }`}>
+                    <p className="text-sm">{message.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="p-4 border-t border-gray-700">
+              <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                Start Free Trial
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Dashboard Card Modal */}
+      {selectedCard && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-800 rounded-lg p-6 max-w-md w-full border border-gray-700">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-semibold">{selectedCard.title}</h3>
+              <Button variant="ghost" size="sm" onClick={() => setSelectedCard(null)}>
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                {selectedCard.icon}
+                <div>
+                  <p className="text-2xl font-bold">{selectedCard.value}</p>
+                  <p className="text-green-400">{selectedCard.change} vs last month</p>
+                </div>
+              </div>
+              <p className="text-gray-300">
+                This metric shows your {selectedCard.title.toLowerCase()} performance over time. 
+                The data is updated in real-time to help you make informed decisions.
+              </p>
+              <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                View Full Report
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Avatar Testimonial Modal */}
+      {selectedAvatar && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-800 rounded-lg p-6 max-w-md w-full border border-gray-700">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center space-x-3">
+                <img 
+                  src={selectedAvatar.avatar} 
+                  alt={selectedAvatar.name}
+                  className="w-12 h-12 rounded-full"
+                />
+                <h3 className="text-xl font-semibold">{selectedAvatar.name}</h3>
+              </div>
+              <Button variant="ghost" size="sm" onClick={() => setSelectedAvatar(null)}>
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            <div className="space-y-4">
+              <p className="text-gray-300 italic">"{selectedAvatar.testimonial}"</p>
+              <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                Start Your Journey
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
