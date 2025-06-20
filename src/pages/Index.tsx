@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { TrendingUp, Users, Zap, BarChart3, Bell, Package, FileText, Mail, MessageSquare, X, Briefcase, Rocket, PenTool, Github, Twitter, Linkedin } from "lucide-react";
+import Marquee from "react-fast-marquee";
 
 // Import refactored components
 import { HeroSection } from "@/components/landing/HeroSection";
@@ -201,7 +202,7 @@ const Index = () => {
             className="bg-blue-600 hover:bg-blue-700"
             onClick={() => setDemoOpen(true)}
           >
-            Go to Demo
+            Go to App
           </Button>
         </div>
       </header>
@@ -213,7 +214,7 @@ const Index = () => {
         currentTagline={currentTagline}
         taglines={taglines}
         handleMagneticCTA={handleMagneticCTA}
-        onCTAClick={() => setCTAOpen(true)}
+        onCTAClick={() => setDemoOpen(true)}
       />
 
       <LiveCounter userCount={userCount} />
@@ -224,7 +225,7 @@ const Index = () => {
       {/* Startup Roadmap - moved below Features */}
       <StartupRoadmap />
 
-      {/* Integrations Section with Continuous Scroll */}
+      {/* Integrations Section with Smooth Infinite Marquee */}
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
@@ -233,13 +234,12 @@ const Index = () => {
               Connect Launchly with the tools you already love and use
             </p>
           </div>
-          <div className="relative overflow-hidden">
-            <div className="flex space-x-6 animate-scroll-left">
-              {/* Triple the integrations for seamless infinite loop */}
-              {[...integrations, ...integrations, ...integrations].map((integration, index) => (
+          <div className="relative">
+            <Marquee speed={50} gradient={false} pauseOnHover={false}>
+              {integrations.map((integration, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 group relative"
+                  className="flex-shrink-0 group relative mx-3"
                 >
                   <Card className="bg-gray-800 border-gray-700 hover:border-blue-500 transition-all duration-300 hover:transform hover:scale-105 w-28 h-28">
                     <CardContent className="p-4 flex flex-col items-center justify-center h-full">
@@ -259,7 +259,7 @@ const Index = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </Marquee>
           </div>
           <div className="text-center mt-8">
             <p className="text-gray-400">
@@ -438,7 +438,7 @@ const Index = () => {
         </div>
       </section>
 
-      <PricingSection onCTAClick={() => setCTAOpen(true)} />
+      <PricingSection onCTAClick={() => setDemoOpen(true)} />
       <NewsletterSection />
 
       {/* Animated CTA Section */}
@@ -452,9 +452,9 @@ const Index = () => {
             size="lg" 
             className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6 rounded-lg shadow-lg animate-pulse-slow magnetic-button"
             onMouseMove={handleMagneticCTA}
-            onClick={() => setCTAOpen(true)}
+            onClick={() => setDemoOpen(true)}
           >
-            Try it Free
+            Go to App
           </Button>
         </div>
       </section>
@@ -476,15 +476,15 @@ const Index = () => {
                 Empowering founders to launch faster and smarter.
               </p>
               <div className="flex space-x-4">
-                <a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <button className="text-gray-400 hover:text-blue-400 transition-colors">
                   <Twitter className="w-5 h-5" />
-                </a>
-                <a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">
+                </button>
+                <button className="text-gray-400 hover:text-blue-400 transition-colors">
                   <Linkedin className="w-5 h-5" />
-                </a>
-                <a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">
+                </button>
+                <button className="text-gray-400 hover:text-blue-400 transition-colors">
                   <Github className="w-5 h-5" />
-                </a>
+                </button>
               </div>
             </div>
             <div>
@@ -493,25 +493,25 @@ const Index = () => {
                 <li><button onClick={() => scrollToSection('features')} className="text-gray-400 hover:text-blue-400 transition-colors">Features</button></li>
                 <li><button onClick={() => scrollToSection('pricing')} className="text-gray-400 hover:text-blue-400 transition-colors">Pricing</button></li>
                 <li><button onClick={() => scrollToSection('dashboard')} className="text-gray-400 hover:text-blue-400 transition-colors">Dashboard</button></li>
-                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Integrations</a></li>
+                <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Integrations</button></li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold mb-4 text-white">Company</h3>
               <ul className="space-y-2">
-                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">About</a></li>
-                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Blog</a></li>
-                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Careers</a></li>
-                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Contact</a></li>
+                <li><button className="text-gray-400 hover:text-blue-400 transition-colors">About</button></li>
+                <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Blog</button></li>
+                <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Careers</button></li>
+                <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Contact</button></li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold mb-4 text-white">Support</h3>
               <ul className="space-y-2">
-                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Help Center</a></li>
-                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Documentation</a></li>
-                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Community</a></li>
-                <li><a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors">Status</a></li>
+                <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Help Center</button></li>
+                <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Documentation</button></li>
+                <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Community</button></li>
+                <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Status</button></li>
               </ul>
             </div>
           </div>
@@ -520,9 +520,9 @@ const Index = () => {
               © 2024 Launchly. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">Privacy Policy</a>
-              <a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">Terms of Service</a>
-              <a href="javascript:void(0)" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">Cookie Policy</a>
+              <button className="text-gray-400 hover:text-blue-400 transition-colors text-sm">Privacy Policy</button>
+              <button className="text-gray-400 hover:text-blue-400 transition-colors text-sm">Terms of Service</button>
+              <button className="text-gray-400 hover:text-blue-400 transition-colors text-sm">Cookie Policy</button>
             </div>
           </div>
         </div>

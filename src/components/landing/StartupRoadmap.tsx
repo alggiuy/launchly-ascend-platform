@@ -37,10 +37,15 @@ export const StartupRoadmap = () => {
         </div>
         <div className="max-w-4xl mx-auto">
           <div className="relative">
-            {/* Timeline line - starts after first dot and ends before last dot */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-400 to-purple-500" style={{ 
+            {/* Timeline line - solid for first two, dotted for last two */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1" style={{ 
               top: '80px', 
-              height: 'calc(100% - 160px)' 
+              height: 'calc(50% - 80px)',
+              background: 'linear-gradient(to bottom, #60a5fa, #a855f7)'
+            }}></div>
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 border-l-2 border-dotted border-blue-400" style={{ 
+              top: '50%', 
+              height: 'calc(50% - 80px)'
             }}></div>
             
             {timelineSteps.map((step, index) => (
