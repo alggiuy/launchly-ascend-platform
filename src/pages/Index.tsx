@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -508,7 +507,7 @@ const Index = () => {
             <div>
               <h3 className="font-semibold mb-4 text-white">Support</h3>
               <ul className="space-y-2">
-                <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Help Center</button>li>
+                <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Help Center</button></li>
                 <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Documentation</button></li>
                 <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Community</button></li>
                 <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Status</button></li>
