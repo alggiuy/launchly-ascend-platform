@@ -58,11 +58,11 @@ const Index = () => {
     { name: "Google Analytics", logo: "/google_analytics.svg" }
   ];
 
-  // Scroll functions
+  // Scroll functions with smooth behavior
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -182,7 +182,7 @@ const Index = () => {
       <DemoModal open={demoOpen} onOpenChange={setDemoOpen} />
       <CTAModal open={ctaOpen} onOpenChange={setCTAOpen} />
 
-      {/* Header */}
+      {/* Header with proper navigation */}
       <header className="fixed top-0 w-full bg-gray-900/80 backdrop-blur-lg border-b border-gray-800 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <button 
@@ -196,7 +196,7 @@ const Index = () => {
             <button onClick={() => scrollToSection('roadmap')} className="hover:text-blue-400 transition-colors">Roadmap</button>
             <button onClick={() => scrollToSection('dashboard')} className="hover:text-blue-400 transition-colors">Dashboard</button>
             <button onClick={() => scrollToSection('pricing')} className="hover:text-blue-400 transition-colors">Pricing</button>
-            <button onClick={() => scrollToSection('newsletter')} className="hover:text-blue-400 transition-colors">Subscribe</button>
+            <button onClick={() => scrollToSection('newsletter')} className="hover:text-blue-400 transition-colors">Newsletter</button>
           </nav>
           <Button 
             className="bg-blue-600 hover:bg-blue-700"
@@ -219,10 +219,10 @@ const Index = () => {
 
       <LiveCounter userCount={userCount} />
       
-      {/* Features Section - moved above Roadmap */}
+      {/* Features Section - positioned before Roadmap */}
       <FeaturesSection />
       
-      {/* Startup Roadmap - moved below Features */}
+      {/* Startup Roadmap - positioned after Features */}
       <StartupRoadmap />
 
       {/* Integrations Section with Smooth Infinite Marquee */}
@@ -235,11 +235,11 @@ const Index = () => {
             </p>
           </div>
           <div className="relative">
-            <Marquee speed={50} gradient={false} pauseOnHover={false}>
+            <Marquee speed={60} gradient={false} pauseOnHover={true}>
               {integrations.map((integration, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 group relative mx-3"
+                  className="flex-shrink-0 group relative mx-4"
                 >
                   <Card className="bg-gray-800 border-gray-700 hover:border-blue-500 transition-all duration-300 hover:transform hover:scale-105 w-28 h-28">
                     <CardContent className="p-4 flex flex-col items-center justify-center h-full">
@@ -254,7 +254,7 @@ const Index = () => {
                       <p className="text-xs text-gray-400 text-center">{integration.name}</p>
                     </CardContent>
                   </Card>
-                  <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                     Coming soon
                   </div>
                 </div>
@@ -459,7 +459,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer with proper navigation */}
       <footer id="contact" className="bg-gray-900 border-t border-gray-800 py-16 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-8">
@@ -476,13 +476,13 @@ const Index = () => {
                 Empowering founders to launch faster and smarter.
               </p>
               <div className="flex space-x-4">
-                <button className="text-gray-400 hover:text-blue-400 transition-colors">
+                <button className="text-gray-400 hover:text-blue-400 transition-colors" aria-label="Twitter">
                   <Twitter className="w-5 h-5" />
                 </button>
-                <button className="text-gray-400 hover:text-blue-400 transition-colors">
+                <button className="text-gray-400 hover:text-blue-400 transition-colors" aria-label="LinkedIn">
                   <Linkedin className="w-5 h-5" />
                 </button>
-                <button className="text-gray-400 hover:text-blue-400 transition-colors">
+                <button className="text-gray-400 hover:text-blue-400 transition-colors" aria-label="GitHub">
                   <Github className="w-5 h-5" />
                 </button>
               </div>
@@ -508,7 +508,7 @@ const Index = () => {
             <div>
               <h3 className="font-semibold mb-4 text-white">Support</h3>
               <ul className="space-y-2">
-                <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Help Center</button></li>
+                <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Help Center</button>li>
                 <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Documentation</button></li>
                 <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Community</button></li>
                 <li><button className="text-gray-400 hover:text-blue-400 transition-colors">Status</button></li>
@@ -533,6 +533,7 @@ const Index = () => {
         <Button
           onClick={() => setChatOpen(!chatOpen)}
           className="bg-blue-600 hover:bg-blue-700 rounded-full p-4 shadow-lg animate-pulse-slow"
+          aria-label="Open chat assistant"
         >
           <MessageSquare className="w-6 h-6" />
           <span className="ml-2 hidden sm:inline">Need help?</span>
@@ -551,6 +552,7 @@ const Index = () => {
                 variant="ghost"
                 size="sm"
                 onClick={() => setChatOpen(false)}
+                aria-label="Close chat"
               >
                 <X className="w-4 h-4" />
               </Button>
@@ -574,7 +576,7 @@ const Index = () => {
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Type a message..."
-                  className="bg-gray-700 border border-gray-600 text-white placeholder-gray-400 flex-1 px-3 py-2 rounded"
+                  className="bg-gray-700 border border-gray-600 text-white placeholder-gray-400 flex-1 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <Button type="submit" size="sm" className="bg-blue-600 hover:bg-blue-700">
                   Send

@@ -15,16 +15,8 @@
 }
 
 @layer utilities {
-  .animate-scroll-left {
-    animation: scroll-left 30s linear infinite;
-  }
-  
   .animate-slide-up {
     animation: slideUp 0.6s ease-out forwards;
-  }
-  
-  .animate-slide-x {
-    animation: slideX 30s ease-in-out infinite;
   }
   
   .animate-pulse-slow {
@@ -34,14 +26,9 @@
   .magnetic-button {
     transition: transform 0.15s ease-out;
   }
-}
-
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-33.33%);
+  
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
   }
 }
 
@@ -56,17 +43,20 @@
   }
 }
 
-@keyframes slideX {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(-20px); }
-  100% { transform: translateX(0); }
-}
-
 @keyframes pulse {
   0%, 100% {
     opacity: 1;
   }
   50% {
     opacity: 0.7;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
