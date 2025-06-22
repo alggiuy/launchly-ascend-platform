@@ -37,7 +37,7 @@ export const StartupRoadmap = () => {
         </div>
         <div className="max-w-4xl mx-auto">
           <div className="relative">
-            {/* Main solid timeline line */}
+            {/* Main solid timeline line throughout */}
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-400 to-purple-500" style={{ 
               top: '80px', 
               height: 'calc(100% - 160px)'
@@ -47,17 +47,17 @@ export const StartupRoadmap = () => {
               <div key={index} className={`flex items-center mb-12 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} animate-slide-up`} style={{ animationDelay: `${index * 0.2}s` }}>
                 <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
                   <Card className="bg-gray-800 border-gray-700 hover:border-blue-500 transition-all duration-300 hover:transform hover:scale-105">
-                    <CardContent className="p-6">
+                    <CardContent className="p-6 relative">
                       <div className={`flex items-center ${index % 2 === 0 ? 'justify-end' : 'justify-start'} mb-4`}>
                         {step.icon}
                       </div>
                       <h3 className="text-xl font-semibold mb-2 text-white">{step.title}</h3>
                       <p className="text-gray-300">{step.description}</p>
                       
-                      {/* Dotted connecting lines for last two steps only */}
+                      {/* Dotted connecting lines only for last two steps */}
                       {index >= 2 && (
-                        <div className={`absolute top-1/2 ${index % 2 === 0 ? 'right-0' : 'left-0'} w-8 h-0.5`}>
-                          <div className="w-full h-full border-t-2 border-dotted border-blue-400 opacity-60"></div>
+                        <div className={`absolute top-1/2 ${index % 2 === 0 ? '-right-8' : '-left-8'} w-8 h-0.5 opacity-60`}>
+                          <div className="w-full h-full border-t-2 border-dotted border-blue-400"></div>
                         </div>
                       )}
                     </CardContent>

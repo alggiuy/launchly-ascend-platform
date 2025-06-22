@@ -1,9 +1,9 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { TrendingUp, Users, Zap, BarChart3, Bell, Package, FileText, Mail, MessageSquare, X, Briefcase, Rocket, PenTool, Github, Twitter, Linkedin } from "lucide-react";
-import Marquee from "react-fast-marquee";
 
 // Import refactored components
 import { HeroSection } from "@/components/landing/HeroSection";
@@ -16,12 +16,17 @@ import { EasterEggModal } from "@/components/landing/EasterEggModal";
 import { DemoModal } from "@/components/landing/DemoModal";
 import { CTAModal } from "@/components/landing/CTAModal";
 import { NewsletterSection } from "@/components/landing/NewsletterSection";
+import { IntegrationsSection } from "@/components/landing/IntegrationsSection";
+import { SupportModal } from "@/components/landing/SupportModal";
+import { UserReportModal } from "@/components/landing/UserReportModal";
 import { useAnimatedCounter } from "@/hooks/useAnimatedCounter";
 
 const Index = () => {
   const [chatOpen, setChatOpen] = useState(false);
   const [demoOpen, setDemoOpen] = useState(false);
   const [ctaOpen, setCTAOpen] = useState(false);
+  const [supportModalOpen, setSupportModalOpen] = useState(false);
+  const [userReportModalOpen, setUserReportModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentTagline, setCurrentTagline] = useState(0);
   const [selectedPersona, setSelectedPersona] = useState("Founder");
@@ -44,17 +49,6 @@ const Index = () => {
   ];
 
   const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
-
-  const integrations = [
-    { name: "Discord", logo: "/discord.svg" },
-    { name: "Google Analytics", logo: "/google_analytics.svg" },
-    { name: "Mailchimp", logo: "/mailchimp.svg" },
-    { name: "Notion", logo: "/notion.svg" },
-    { name: "Shopify", logo: "/shopify.svg" },
-    { name: "Slack", logo: "/slack.svg" },
-    { name: "Stripe", logo: "/stripe.svg" },
-    { name: "Zapier", logo: "/zapier.svg" }
-  ];
 
   // Scroll functions with smooth behavior
   const scrollToSection = (sectionId: string) => {
@@ -179,6 +173,8 @@ const Index = () => {
       <EasterEggModal showEasterEgg={showEasterEgg} setShowEasterEgg={setShowEasterEgg} />
       <DemoModal open={demoOpen} onOpenChange={setDemoOpen} />
       <CTAModal open={ctaOpen} onOpenChange={setCTAOpen} />
+      <SupportModal open={supportModalOpen} onOpenChange={setSupportModalOpen} />
+      <UserReportModal open={userReportModalOpen} onOpenChange={setUserReportModalOpen} />
 
       {/* Header with proper navigation */}
       <header className="fixed top-0 w-full bg-gray-900/80 backdrop-blur-lg border-b border-gray-800 z-50">
@@ -223,49 +219,8 @@ const Index = () => {
       {/* Startup Roadmap - positioned after Features */}
       <StartupRoadmap />
 
-      {/* Integrations Section with Smooth Infinite Marquee */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Integrates with your favorite tools</h2>
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-              Connect Launchly with the tools you already love and use
-            </p>
-          </div>
-          <div className="relative">
-            <Marquee speed={50} gradient={false} pauseOnHover={true} loop={0}>
-              {integrations.map((integration, index) => (
-                <div
-                  key={index}
-                  className="flex-shrink-0 group relative mx-4"
-                >
-                  <Card className="bg-gray-800 border-gray-700 hover:border-blue-500 transition-all duration-300 hover:transform hover:scale-105 w-28 h-28">
-                    <CardContent className="p-4 flex flex-col items-center justify-center h-full">
-                      <img 
-                        src={integration.logo} 
-                        alt={integration.name}
-                        className="w-8 h-8 mb-2"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                        }}
-                      />
-                      <p className="text-xs text-gray-400 text-center">{integration.name}</p>
-                    </CardContent>
-                  </Card>
-                  <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                    Coming soon
-                  </div>
-                </div>
-              ))}
-            </Marquee>
-          </div>
-          <div className="text-center mt-8">
-            <p className="text-gray-400">
-              More integrations coming soon. Need a specific tool? Let us know.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Integrations Section with Enhanced Carousel */}
+      <IntegrationsSection />
 
       <TestimonialsSection />
 
@@ -372,19 +327,19 @@ const Index = () => {
                         <h3 className="text-lg font-semibold mb-4 text-white">Quick Actions</h3>
                         <div className="grid grid-cols-2 gap-3">
                           <Button 
-                            variant="outline" 
-                            size="sm" 
+                            variant="outline"
+                            size="sm"
                             className="border-gray-400 hover:border-blue-400 text-black hover:text-black bg-gray-300 hover:bg-gray-200 hover:scale-105 transition-all duration-200"
-                            onClick={() => alert("Get Support clicked! This would open a support modal in a real app.")}
+                            onClick={() => setSupportModalOpen(true)}
                           >
                             <Mail className="w-4 h-4 mr-2 text-black" />
                             Get Support
                           </Button>
                           <Button 
-                            variant="outline" 
-                            size="sm" 
-                            className="border-gray-400 hover:border-blue-400 text-black hover:text-black bg-gray-300 hover:bg-gray-200 hover:scale-105 transition-all duration-200 hover:shadow-lg"
-                            onClick={() => alert("User Report clicked! This would generate a user report in a real app.")}
+                            variant="outline"
+                            size="sm"
+                            className="border-gray-400 hover:border-blue-400 text-black hover:text-black bg-gray-300 hover:bg-gray-200 hover:scale-105 transition-all duration-200"
+                            onClick={() => setUserReportModalOpen(true)}
                           >
                             <FileText className="w-4 h-4 mr-2 text-black" />
                             User Report

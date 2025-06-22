@@ -17,10 +17,10 @@ const testimonials = [
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
   },
   {
-    name: "Anna Thompson",
+    name: "Emma Thompson",
     role: "CEO, Creative Studio",
     content: "As a non-technical founder, Launchly was exactly what I needed. I launched my marketplace without hiring a single developer.",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face"
+    avatar: "https://images.unsplash.com/photo-1494790108755-2616b332c1cd?w=150&h=150&fit=crop&crop=face"
   },
   {
     name: "David Park",
