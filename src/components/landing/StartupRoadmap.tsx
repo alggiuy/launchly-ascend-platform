@@ -54,12 +54,10 @@ export const StartupRoadmap = () => {
                       <h3 className="text-xl font-semibold mb-2 text-white">{step.title}</h3>
                       <p className="text-gray-300">{step.description}</p>
                       
-                      {/* Dotted connecting lines only for last two steps */}
-                      {index >= 2 && (
-                        <div className={`absolute top-1/2 ${index % 2 === 0 ? '-right-8' : '-left-8'} w-8 h-0.5 opacity-60`}>
-                          <div className="w-full h-full border-t-2 border-dotted border-blue-400"></div>
-                        </div>
-                      )}
+                      {/* Dotted connecting lines for all steps */}
+                      <div className={`absolute top-1/2 ${index % 2 === 0 ? '-right-8' : '-left-8'} w-8 h-0.5 opacity-60`}>
+                        <div className="w-full h-full border-t-2 border-dotted border-blue-400"></div>
+                      </div>
                     </CardContent>
                   </Card>
                 </div>
