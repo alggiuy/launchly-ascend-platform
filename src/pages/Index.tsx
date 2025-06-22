@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { TrendingUp, Users, Zap, BarChart3, Bell, Package, FileText, Mail, MessageSquare, X, Briefcase, Rocket, PenTool, Github, Twitter, Linkedin } from "lucide-react";
@@ -47,14 +46,14 @@ const Index = () => {
   const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
 
   const integrations = [
-    { name: "Slack", logo: "/slack.svg" },
-    { name: "Notion", logo: "/notion.svg" },
-    { name: "Stripe", logo: "/stripe.svg" },
     { name: "Discord", logo: "/discord.svg" },
-    { name: "Shopify", logo: "/shopify.svg" },
-    { name: "Zapier", logo: "/zapier.svg" },
+    { name: "Google Analytics", logo: "/google_analytics.svg" },
     { name: "Mailchimp", logo: "/mailchimp.svg" },
-    { name: "Google Analytics", logo: "/google_analytics.svg" }
+    { name: "Notion", logo: "/notion.svg" },
+    { name: "Shopify", logo: "/shopify.svg" },
+    { name: "Slack", logo: "/slack.svg" },
+    { name: "Stripe", logo: "/stripe.svg" },
+    { name: "Zapier", logo: "/zapier.svg" }
   ];
 
   // Scroll functions with smooth behavior
@@ -234,7 +233,7 @@ const Index = () => {
             </p>
           </div>
           <div className="relative">
-            <Marquee speed={60} gradient={false} pauseOnHover={true}>
+            <Marquee speed={50} gradient={false} pauseOnHover={true} loop={0}>
               {integrations.map((integration, index) => (
                 <div
                   key={index}
@@ -451,9 +450,9 @@ const Index = () => {
             size="lg" 
             className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6 rounded-lg shadow-lg animate-pulse-slow magnetic-button"
             onMouseMove={handleMagneticCTA}
-            onClick={() => setDemoOpen(true)}
+            onClick={scrollToTop}
           >
-            Go to App
+            Get Started Now
           </Button>
         </div>
       </section>

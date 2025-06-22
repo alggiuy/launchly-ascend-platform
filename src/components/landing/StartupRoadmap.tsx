@@ -37,15 +37,10 @@ export const StartupRoadmap = () => {
         </div>
         <div className="max-w-4xl mx-auto">
           <div className="relative">
-            {/* Consistent timeline line - solid for first two steps, dotted for last two */}
+            {/* Main solid timeline line */}
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-400 to-purple-500" style={{ 
               top: '80px', 
-              height: 'calc(50% - 80px)'
-            }}></div>
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1" style={{ 
-              top: '50%', 
-              height: 'calc(50% - 80px)',
-              background: 'repeating-linear-gradient(to bottom, #60a5fa 0px, #60a5fa 8px, transparent 8px, transparent 16px)'
+              height: 'calc(100% - 160px)'
             }}></div>
             
             {timelineSteps.map((step, index) => (
@@ -58,10 +53,17 @@ export const StartupRoadmap = () => {
                       </div>
                       <h3 className="text-xl font-semibold mb-2 text-white">{step.title}</h3>
                       <p className="text-gray-300">{step.description}</p>
+                      
+                      {/* Dotted connecting lines for last two steps only */}
+                      {index >= 2 && (
+                        <div className={`absolute top-1/2 ${index % 2 === 0 ? 'right-0' : 'left-0'} w-8 h-0.5`}>
+                          <div className="w-full h-full border-t-2 border-dotted border-blue-400 opacity-60"></div>
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 </div>
-                <div className="w-8 h-8 bg-blue-600 rounded-full border-4 border-gray-900 flex items-center justify-center z-10">
+                <div className="w-8 h-8 bg-blue-600 rounded-full border-4 border-gray-900 flex items-center justify-center z-10 relative">
                   <div className="w-3 h-3 bg-white rounded-full"></div>
                 </div>
                 <div className="w-1/2"></div>

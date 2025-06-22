@@ -2,17 +2,52 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export const NewsletterSection = () => {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!email || !email.includes('@')) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
     console.log("Newsletter signup:", email);
-    setSubmitted(true);
-    setEmail("");
-    setTimeout(() => setSubmitted(false), 3000);
+    
+    // Simulate API call
+    try {
+      // In a real app, this would be an actual API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setSubmitted(true);
+      setEmail("");
+      
+      toast({
+        title: "Success!",
+        description: "You've been subscribed to our newsletter.",
+      });
+      
+      setTimeout(() => setSubmitted(false), 3000);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -33,9 +68,14 @@ export const NewsletterSection = () => {
             onChange={(e) => setEmail(e.target.value)}
             className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 flex-1"
             required
+            disabled={loading}
           />
-          <Button type="submit" className="bg-blue-600 hover:bg-blue-700 px-8">
-            Subscribe
+          <Button 
+            type="submit" 
+            className="bg-blue-600 hover:bg-blue-700 px-8"
+            disabled={loading}
+          >
+            {loading ? "Subscribing..." : "Subscribe"}
           </Button>
         </form>
         {submitted && (
